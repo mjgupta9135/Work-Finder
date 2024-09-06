@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
   try {
-    const { fullname, email, phone, role } = req.body;
+    const { fullname, email, phone, password, role } = req.body;
     if (!fullname || !email || !phone || !role) {
       res.staus(400).json({
         msg: "Something is missing",
@@ -32,14 +32,14 @@ export const register = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(err);
+    console.log(error);
   }
 };
 
 export const login = async (req, res) => {
   try {
     const { email, password, role } = req.body;
-    if (!fullname || !email || !role) {
+    if (!email || !role) {
       res.staus(400).json({
         msg: "Something is missing",
         success: false,
@@ -97,7 +97,7 @@ export const login = async (req, res) => {
         success: true,
       });
   } catch (error) {
-    console.log(err);
+    console.log(error);
   }
 };
 
@@ -113,6 +113,7 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phone, bio, skills } = req.body;
+    const file = req.file;
     if (!fullname || !email || !phone || !bio || !skils) {
       res.staus(400).json({
         msg: "Something is missing",
@@ -136,5 +137,18 @@ export const updateProfile = async (req, res) => {
       (user.profile.skills = skillsArray);
 
     await user.save();
+    user = {
+      _id: user._id,
+      fullname: user.fullname,
+      email: user.email,
+      phoneNumber: user.phone,
+      role: user.role,
+      profile: user.profile,
+    };
+    res.status(200).json({
+      msg: "Profile updated successfully",
+      user,
+      success: true,
+    });
   } catch (error) {}
 };
