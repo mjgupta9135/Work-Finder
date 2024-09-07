@@ -1,11 +1,14 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import userValidation from "../validation/user.validation.js";
+import {
+  userLoginValidation,
+  userSignupValidation,
+} from "../validation/user.validation.js";
 
 export const register = async (req, res) => {
   try {
-    const response = userValidation.safeParse(req.body);
+    const response = userSignupValidation.safeParse(req.body);
     if (!response.success) {
       // Handle Zod validation errors
       return res.status(400).json({
@@ -47,7 +50,7 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const response = userValidation.safeParse(req.body);
+    const response = userLoginValidation.safeParse(req.body);
     if (!response.success) {
       return res.status(400).json({
         errors: response.error.errors,
