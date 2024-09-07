@@ -1,67 +1,70 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import userValidation from "../validation/user.validation.js";
 
 export const register = async (req, res) => {
   try {
-    const { fullname, email, phone, password, role } = req.body;
-    if (!fullname || !email || !phone || !role) {
-      res.staus(400).json({
-        msg: "Something is missing",
+    const response = userValidation.safeParse(req.body);
+    if (!response.success) {
+      // Handle Zod validation errors
+      return res.status(400).json({
+        errors: response.error.errors,
         success: false,
       });
     }
 
-    const user = await User.findOne({ email });
-    if (user) {
-      res.staus(400).json({
-        msg: "User already exists with this email.",
+    const { fullname, email, phone, password, role } = response.data;
+    if (role != "Student") {
+      return res.status(400).json({
+        msg: "Please Select student role",
+      });
+    }
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.json({
+        msg: "User already exists",
         success: false,
       });
     }
-
     const hashedPassword = await bcrypt.hash(password, 10);
-    await User.create({
+    const newUser = new User({
       fullname,
       email,
+      phone,
       password: hashedPassword,
       role,
     });
-    res.status(200).json({
-      msg: "Account Created Successfully",
+    await newUser.save();
+    return res.status(200).json({
+      message: "Account created successfully",
       success: true,
     });
   } catch (error) {
-    console.log(error);
+    res.status(500).json([console.log(error)]);
   }
 };
 
 export const login = async (req, res) => {
   try {
-    const { email, password, role } = req.body;
-    if (!email || !role) {
-      res.staus(400).json({
-        msg: "Something is missing",
-        success: false,
-      });
-    }
-    let user = await User.findOne({
-      email,
-    });
-    if (!user) {
+    const response = userValidation.safeParse(req.body);
+    if (!response.success) {
       return res.status(400).json({
-        msg: "Incorrect email of password",
-        success: false,
-      });
-    }
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
-    if (!isPasswordMatch) {
-      return res.status(400).json({
-        msg: "Incorrect email of password",
+        errors: response.error.errors,
         success: false,
       });
     }
 
+    const { email, password, role } = response.data;
+    let user = await User.findOne({ email });
+
+    // Check if user exists and if password matches
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return res.status(400).json({
+        msg: "Incorrect email or password",
+        success: false,
+      });
+    }
     if (role != user.role) {
       return res.status(400).json({
         msg: "Account dosen't exist with current role",
@@ -112,15 +115,9 @@ export const logout = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   try {
-    const { fullname, email, phone, bio, skills } = req.body;
-    const file = req.file;
-    if (!fullname || !email || !phone || !bio || !skils) {
-      res.staus(400).json({
-        msg: "Something is missing",
-        success: false,
-      });
-    }
-
+    console.log(req.body);
+    const response = userValidation.safeParse(req.body);
+    const { fullname, email, bio, profile } = response.data;
     const skillsArray = skills.split(",");
     const userId = req.id;
     let user = await User.findById(userId);
