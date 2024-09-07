@@ -8,15 +8,16 @@ const userSchema = new mongoose.Schema(
     password: String,
     role: String,
     profile: {
-      bio: String,
-      skills: String,
-      resume: String,
-      resumeOriginalName: String,
+      bio: { type: String, default: "" },
+      skills: { type: [String], default: [] }, // Array of strings, empty by default
+      resume: { type: String, default: "" },
+      resumeOriginalName: { type: String, default: "" },
       company: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Company",
+        default: null,
       },
-      profilePhoto: String,
+      profilePhoto: { type: String, default: "" },
     },
   },
   { timestamps: true }

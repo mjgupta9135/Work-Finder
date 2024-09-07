@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import {
   userLoginValidation,
   userSignupValidation,
+  userUpdateValidation,
 } from "../validation/user.validation.js";
 
 export const register = async (req, res) => {
@@ -118,37 +119,70 @@ export const logout = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   try {
-    console.log(req.body);
-    const response = userValidation.safeParse(req.body);
-    const { fullname, email, bio, profile } = response.data;
-    const skillsArray = skills.split(",");
+    // Validate request body
+    const response = userUpdateValidation.safeParse(req.body);
+
+    // Handle validation errors
+    if (!response.success) {
+      return res.status(400).json({
+        msg: "Validation failed",
+        errors: response.error.errors,
+        success: false,
+      });
+    }
+
+    const { fullname, email, phone, profile } = response.data;
+
     const userId = req.id;
+
+    // Find user by ID
     let user = await User.findById(userId);
     if (!user) {
-      res.staus(400).json({
+      return res.status(400).json({
         msg: "User Not Found",
         success: false,
       });
     }
-    (user.fullname = fullname),
-      (user.email = email),
-      user.phone,
-      (user.profile.bio = bio),
-      (user.profile.skills = skillsArray);
 
+    // Update user fields if they are provided
+    if (fullname) user.fullname = fullname;
+    if (email) user.email = email;
+    if (phone) user.phone = phone;
+    if (profile) {
+      if (profile.bio) user.profile.bio = profile.bio;
+      if (profile.skills) user.profile.skills = profile.skills;
+      if (profile.resume) user.profile.resume = profile.resume;
+      if (profile.resumeOriginalName)
+        user.profile.resumeOriginalName = profile.resumeOriginalName;
+      if (profile.company) user.profile.company = profile.company;
+      if (profile.profilePhoto)
+        user.profile.profilePhoto = profile.profilePhoto;
+    }
+
+    // Save the updated user
     await user.save();
-    user = {
+
+    // Prepare user object for response
+    const updatedUser = {
       _id: user._id,
       fullname: user.fullname,
       email: user.email,
-      phoneNumber: user.phone,
+      phone: user.phone,
       role: user.role,
       profile: user.profile,
     };
+
+    // Send success response
     res.status(200).json({
       msg: "Profile updated successfully",
-      user,
+      user: updatedUser,
       success: true,
     });
-  } catch (error) {}
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    res.status(500).json({
+      msg: "An error occurred while updating the profile",
+      success: false,
+    });
+  }
 };
