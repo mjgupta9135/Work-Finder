@@ -19,11 +19,7 @@ export const register = async (req, res) => {
     }
 
     const { fullname, email, phone, password, role } = response.data;
-    if (role != "Student") {
-      return res.status(400).json({
-        msg: "Please Select student role",
-      });
-    }
+
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.json({
