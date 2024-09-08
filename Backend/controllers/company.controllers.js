@@ -56,6 +56,7 @@ export const getCompanyById = async (req, res) => {
       });
     }
     return res.status(200).json({
+      company,
       success: true,
     });
   } catch (error) {}
