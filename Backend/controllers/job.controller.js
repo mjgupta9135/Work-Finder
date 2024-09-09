@@ -13,18 +13,19 @@ export const postJob = async (req, res) => {
       position,
       companyId,
     } = req.body;
+    console.log(req.id);
     const userId = req.id;
     const job = await Job.create({
       title,
       description,
-      requirements: requirements.split(","),
-      salary: salary(Number),
+      requirements,
+      salary,
       location,
       jobType,
       experience,
       position,
       company: companyId,
-      created_by: userId,
+      createdBy: userId,
     });
     return res.status(201).json({
       message: "New Job Created Successfully",
@@ -74,7 +75,7 @@ export const getJobById = async (req, res) => {
       });
     }
     return res.status(200).json({
-      jobs,
+      job,
       success: true,
     });
   } catch (error) {
