@@ -1,7 +1,16 @@
 import { Job } from "../models/job.model.js";
+import { jobPostValidation } from "../validation/job.validation.js";
 
 export const postJob = async (req, res) => {
   try {
+    const response = jobPostValidation.safeParse(req.body);
+    if (!response.success) {
+      // Handle Zod validation errors
+      return res.status(400).json({
+        errors: response.error.errors,
+        success: false,
+      });
+    }
     const {
       title,
       description,
@@ -12,8 +21,7 @@ export const postJob = async (req, res) => {
       experience,
       position,
       companyId,
-    } = req.body;
-    console.log(req.id);
+    } = response.data;
     const userId = req.id;
     const job = await Job.create({
       title,
