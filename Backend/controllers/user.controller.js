@@ -48,6 +48,7 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const response = userLoginValidation.safeParse(req.body);
+
     if (!response.success) {
       return res.status(400).json({
         errors: response.error.errors,
@@ -58,8 +59,9 @@ export const login = async (req, res) => {
     const { email, password, role } = response.data;
     let user = await User.findOne({ email });
 
+    const hashedPass = await bcrypt.compare(password, user.password);
     // Check if user exists and if password matches
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user || !hashedPass) {
       return res.status(400).json({
         msg: "Incorrect email or password",
         success: false,
