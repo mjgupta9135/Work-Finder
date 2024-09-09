@@ -4,7 +4,7 @@ const isAutheticated = async (req, res, next) => {
   try {
     const token = req.cookies.token;
     if (!token) {
-      return res.staus(400).json({
+      return res.status(400).json({
         msg: "User not authenticated",
         success: false,
       });
@@ -20,7 +20,7 @@ const isAutheticated = async (req, res, next) => {
     req.id = decode.userId;
     next();
   } catch (error) {
-    console.log(err);
+    console.log(error);
   }
 };
 export default isAutheticated;
