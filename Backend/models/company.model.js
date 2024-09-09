@@ -1,18 +1,10 @@
 import mongoose from "mongoose";
 const companySchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-    },
-    description: {
-      type: String,
-    },
-    website: {
-      type: String,
-    },
-    location: {
-      type: String,
-    },
+    name: String,
+    description: String,
+    website: String,
+    location: String,
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

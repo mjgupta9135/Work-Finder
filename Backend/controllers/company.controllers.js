@@ -1,8 +1,20 @@
 import { Company } from "../models/company.model.js";
+import {
+  companyRegisterValidaton,
+  updateCompanyValidation,
+} from "../validation/company.validation.js";
 
 export const registerCompany = async (req, res) => {
   try {
-    const companyName = req.body.name;
+    let response = companyRegisterValidaton.safeParse(req.body);
+    if (!response.success) {
+      // Handle Zod validation errors
+      return res.status(400).json({
+        errors: response.error.errors,
+        success: false,
+      });
+    }
+    const companyName = response.data.name;
     let company = await Company.findOne({
       name: companyName,
     });
@@ -69,7 +81,15 @@ export const getCompanyById = async (req, res) => {
 
 export const updateCompany = async (req, res) => {
   try {
-    const { name, description, website, location } = req.body;
+    const response = updateCompanyValidation.safeParse(req.body);
+    if (!response.success) {
+      // Handle Zod validation errors
+      return res.status(400).json({
+        errors: response.error.errors,
+        success: false,
+      });
+    }
+    const { name, description, website, location } = response.data;
     // const file=req.file;
 
     const updateData = { name, description, website, location };
