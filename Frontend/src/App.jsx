@@ -1,11 +1,7 @@
 import "./App.css";
 import Navbar from "./components/shared/navbar";
 function App() {
-  return (
-    <>
-      <Navbar />
-    </>
-  );
+  return <Navbar />;
 }
 
 export default App;
