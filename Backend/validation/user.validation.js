@@ -9,7 +9,7 @@ export const userSignupValidation = z.object({
   password: z.string().min(6, {
     message: "Password is required and must be at least 6 characters",
   }), // Make sure password is required
-  role: z.enum(["Student", "Recruiter"], {
+  role: z.enum(["student", "recruiter"], {
     message: "Please choose correct role",
   }), // Make sure to match the case with Mongoose
 });
@@ -19,7 +19,7 @@ export const userLoginValidation = z.object({
   password: z.string().min(6, {
     message: "Password is required and must be at least 6 characters",
   }), // Make sure password is required
-  role: z.enum(["Student", "Recruiter"], {
+  role: z.enum(["student", "recruiter"], {
     message: "Please choose correct role",
   }), // Make sure to match the case with Mongoose
 });

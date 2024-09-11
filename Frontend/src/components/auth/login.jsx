@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import Navbar from "../shared/navbar";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { RadioGroup } from "@/components/ui/radio-group";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import axios from "axios";
+import { USER_API_END_POINT } from "@/utils/constant";
 
-const login = () => {
+const Login = () => {
+  const navigate = useNavigate();
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -14,7 +18,44 @@ const login = () => {
   });
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(input);
+
+    try {
+      const response = await axios.post(`${USER_API_END_POINT}/login`, input, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      if (response.data.success) {
+        navigate("/");
+        console.log(response.data);
+        toast.success(response.data.msg);
+      }
+    } catch (error) {
+      console.log(error);
+      // Error handling for displaying toast notifications
+      if (error.response) {
+        const errorData = error.response.data;
+        console.log(errorData);
+        if (Array.isArray(errorData.errors)) {
+          // Display each error message if errors is an array
+          errorData.errors.forEach((err) => {
+            toast.error(err.message);
+          });
+        } else if (errorData.msg) {
+          toast.error(errorData.msg);
+        } else {
+          // Fallback error message
+          toast.error("An unexpected error occurred");
+        }
+      } else if (error.request) {
+        // Handle no response received
+        toast.error("No response received from server");
+      } else {
+        // Handle error in setting up the request
+        toast.error(error.message);
+      }
+    }
   };
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -94,4 +135,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;
