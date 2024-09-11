@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import Navbar from "../shared/navbar";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import Navbar from "../components/navbar";
+import { Label } from "../components/ui/label";
+import { Input } from "../components/ui/input";
 import { RadioGroup } from "@/components/ui/radio-group";
-import { Button } from "../ui/button";
+import { Button } from "../components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "axios";
 import { USER_API_END_POINT } from "@/utils/constant";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/slices/authSlice";
+import { Loader2 } from "lucide-react";
 const Login = () => {
   const navigate = useNavigate();
   const [input, setInput] = useState({
@@ -16,10 +18,13 @@ const Login = () => {
     password: "",
     role: "",
   });
+  const dispatch = useDispatch();
+  const { loading } = useSelector((store) => store.auth);
   const submitHandler = async (e) => {
     e.preventDefault();
 
     try {
+      dispatch(setLoading(true));
       const response = await axios.post(`${USER_API_END_POINT}/login`, input, {
         headers: {
           "Content-Type": "application/json",
@@ -55,6 +60,8 @@ const Login = () => {
         // Handle error in setting up the request
         toast.error(error.message);
       }
+    } finally {
+      dispatch(setLoading(false));
     }
   };
   const changeEventHandler = (e) => {
@@ -120,9 +127,17 @@ const Login = () => {
               </RadioGroup>
             </div>
           </div>
-          <Button type="submit" className=" w-full my-4 bg-black text-white">
-            Login
-          </Button>
+          {loading ? (
+            <Button className="w-full my-4 bg-black text-white">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please Wait
+            </Button>
+          ) : (
+            <Button type="submit" className=" w-full my-4 bg-black text-white">
+              Login
+            </Button>
+          )}
+
           <span className="font-sm  font-display">
             Don't have an account?{" "}
             <Link to="/signup" className="text-blue-800 font-bold font-display">

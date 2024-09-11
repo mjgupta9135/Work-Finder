@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Navbar from "../shared/navbar";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import Navbar from "../components/navbar";
+import { Label } from "../components/ui/label";
+import { Input } from "../components/ui/input";
 import { RadioGroup } from "@/components/ui/radio-group";
-import { Button } from "../ui/button";
+import { Button } from "../components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { USER_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/slices/authSlice";
+import { Loader2 } from "lucide-react";
 
 const Signup = () => {
   const [input, setInput] = useState({
@@ -18,6 +21,8 @@ const Signup = () => {
     role: "",
     file: "",
   });
+  const dispatch = useDispatch();
+  const { loading } = useSelector((store) => store.auth);
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
@@ -35,6 +40,7 @@ const Signup = () => {
     }
 
     try {
+      dispatch(setLoading(true));
       const response = await axios.post(
         `${USER_API_END_POINT}/register`,
         formData,
@@ -72,6 +78,8 @@ const Signup = () => {
         // Handle error in setting up the request
         toast.error(error.message);
       }
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
@@ -89,7 +97,7 @@ const Signup = () => {
       <div className="flex items-center justify-center max-w-7xl mx-auto">
         <form
           onSubmit={submitHandler}
-          className="w-1/2 border-gray-200 border-2 rounded-md p-4 my-10"
+          className="w-1/2 border-gray-200 border-2 rounded-md p-4 my-10 space-y-2"
         >
           <h1 className="font-bold text-xl mb-5 text-center pb-2">Signup</h1>
           <div>
@@ -170,9 +178,16 @@ const Signup = () => {
               />
             </div>
           </div>
-          <Button type="submit" className="w-full my-4 bg-black text-white">
-            Signup
-          </Button>
+          {loading ? (
+            <Button className="w-full my-4 bg-black text-white">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please Wait
+            </Button>
+          ) : (
+            <Button type="submit" className=" w-full my-4 bg-black text-white">
+              Signup
+            </Button>
+          )}
           <span className="font-sm font-display">
             Already have an account?{" "}
             <Link to="/login" className="text-blue-800 font-bold font-display">
