@@ -3,4 +3,5 @@
 @tailwind utilities;
 body {
   font-family: poppins;
+  overflow-x: hidden;
 }
