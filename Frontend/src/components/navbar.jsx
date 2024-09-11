@@ -13,13 +13,18 @@ const Navbar = () => {
   return (
     <div className="bg-white font-display flex items-center justify-between mx-auto max-w-7xl h-16 font-poppins">
       <div>
-        <h1 className="text-2xl font-bold ">
-          Work<span className="text-[#f83002]">Finder</span>
-        </h1>
+        <Link to="/">
+          <h1 className="text-2xl font-bold ">
+            Work<span className="text-[#f83002]">Finder</span>
+          </h1>
+        </Link>
       </div>
       <div className="flex gap-12">
         <ul className="flex items-center gap-5 font-semibold ">
-          <li className="cursor-pointer">Home</li>
+          <Link to="/">
+            {" "}
+            <li className="cursor-pointer">Home</li>
+          </Link>
           <li className="cursor-pointer">Jobs</li>
           <li className="cursor-pointer">Browse</li>
         </ul>

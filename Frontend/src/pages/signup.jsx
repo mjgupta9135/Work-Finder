@@ -94,7 +94,7 @@ const Signup = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex items-center justify-center max-w-7xl mx-auto">
+      <div className="flex animate-fadeInUp items-center justify-center max-w-7xl mx-auto">
         <form
           onSubmit={submitHandler}
           className="w-1/2 border-gray-200 border-2 rounded-md p-4 my-10 space-y-2"

@@ -12,6 +12,25 @@ module.exports = {
         display: ["Poppins", "sans-serif"], // Custom display font (Poppins)
         body: ['"Open Sans"', "sans-serif"], // Custom body font (Open Sans)
       },
+      keyframes: {
+        fadeInUp: {
+          from: { opacity: 0, transform: "translateY(20px)" },
+          to: { opacity: 1, transform: "translateY(0)" },
+        },
+        fadeInLeft: {
+          from: { opacity: 0, transform: "translateX(-20px)" },
+          to: { opacity: 1, transform: "translateX(0)" },
+        },
+        fadeInRight: {
+          from: { opacity: 0, transform: "translateX(20px)" },
+          to: { opacity: 1, transform: "translateX(0)" },
+        },
+      },
+      animation: {
+        fadeInUp: "fadeInUp 1.5s ease-out",
+        fadeInLeft: "fadeInLeft 1.5s ease-out",
+        fadeInRight: "fadeInRight 0.5s ease-out",
+      },
     },
   },
   plugins: [],

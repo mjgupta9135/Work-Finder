@@ -3,7 +3,7 @@ import Navbar from "../components/navbar";
 import Hero from "@/components/hero";
 import Categorycarousel from "@/components/categorycarousel";
 import LatestJob from "@/components/latestJob";
-
+import Footer from "@/components/footer";
 const home = () => {
   return (
     <div>
@@ -11,7 +11,7 @@ const home = () => {
       <Hero />
       <Categorycarousel />
       <LatestJob />
-      {/* <Footer/> */}
+      <Footer />
     </div>
   );
 };

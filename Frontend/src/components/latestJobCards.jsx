@@ -2,7 +2,7 @@ import React from "react";
 import { Badge } from "./ui/badge";
 const latestJobCards = () => {
   return (
-    <div className="p-5 rounded-md shadow-2xl bg=white border-gray-100 cursor-pointer">
+    <div className="p-5 rounded-md shadow-2xl bg=white border-gray-100 cursor-pointer animate-fadeInUp">
       <div>
         <h1 className="font-semibold text-lg">Company Name</h1>
         <p className="text-sm text-gray-600">India</p>

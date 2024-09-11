@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 
 const hero = () => {
   return (
-    <div className="text-center mb-[-60px] my-4">
+    <div className="text-center mb-[-60px] my-4 animate-fadeInLeft">
       <span className="px-4 py-2   rounded-full bg-gray-100 text-[#fb3002] font-bold text-xl">
         N0.1 JOB Hunt Website
       </span>
@@ -12,7 +12,7 @@ const hero = () => {
         Search, Apply & <br /> Get Your{" "}
         <span className="text-[#6A38C2]">Dream JOBs</span>
       </h1>
-      <p className="text-lg font-semibold text-[#05a4fa]">
+      <p className="text-lg font-semibold text-[#ff04d5]">
         Search, apply, and get your dream job with ease and confidence.
       </p>
 

@@ -19,7 +19,7 @@ const category = [
 
 const CategoryCarousel = () => {
   return (
-    <div className="">
+    <div className="animate-fadeInLeft">
       <Carousel className="w-full max-w-xl mx-auto my-28">
         <CarouselContent>
           {category.map((cat, index) => (
