@@ -28,7 +28,9 @@ const Navbar = () => {
           <Link to="/jobs">
             <li className="cursor-pointer">Jobs</li>
           </Link>
-          <li className="cursor-pointer">Browse</li>
+          <Link to="/browse">
+            <li className="cursor-pointer">Browse</li>
+          </Link>
         </ul>
         {!user ? (
           <div className="flex gap-4 items-center">
