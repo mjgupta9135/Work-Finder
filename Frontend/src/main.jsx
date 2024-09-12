@@ -5,7 +5,6 @@ import "./index.css";
 import { Toaster } from "./components/ui/sonner.jsx";
 import { Provider } from "react-redux";
 import store from "./hooks/store.js";
-import { ThemeProvider } from "@/components/theme-provider";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

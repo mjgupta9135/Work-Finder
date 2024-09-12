@@ -25,7 +25,9 @@ const Navbar = () => {
             {" "}
             <li className="cursor-pointer">Home</li>
           </Link>
-          <li className="cursor-pointer">Jobs</li>
+          <Link to="/jobs">
+            <li className="cursor-pointer">Jobs</li>
+          </Link>
           <li className="cursor-pointer">Browse</li>
         </ul>
         {!user ? (
