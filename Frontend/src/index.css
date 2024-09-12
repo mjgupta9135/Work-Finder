@@ -5,3 +5,6 @@ body {
   font-family: poppins;
   overflow-x: hidden;
 }
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

@@ -6,15 +6,15 @@ import { Badge } from "./ui/badge";
 
 const job = () => {
   return (
-    <div className="p-5 rounded-md shadow-xl bg-white border-gray-200">
-      <div className="flex items-center justify-between">
+    <div className="p-5 rounded-md shadow-xl bg-white animate-fadeInUp  border-gray-200">
+      <div className="flex items-center justify-between ">
         <p className="text-sm text-gray-600">2 Days Ago</p>
         <Button variant="outline" className="rounded-full " size="icon">
           <Bookmark />
         </Button>
       </div>
 
-      <div className="flex items-center gap-2 my-2">
+      <div className="flex items-center gap-2 my-2 ">
         <Button className="p-6" variant="outline" size="icon">
           <Avatar>
             <AvatarImage src="https://imgs.search.brave.com/IrjckpSv0CZsbpLfnrNzwh401w4BcZjUvJYL3U9I8cI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTI5/NzE1Mjg1NS92ZWN0/b3IvbG9nby13aXRo/LXRoZS1sZXR0ZXIt/Yy5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9XzZuSE9ReTNn/VjE2ZENIeGpUUUhM/b25JZWdWQU9YSm43/a012ZXJHdEZ3OD0"></AvatarImage>
