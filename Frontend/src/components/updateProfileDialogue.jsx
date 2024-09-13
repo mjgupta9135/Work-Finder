@@ -80,6 +80,7 @@ const UpdateProfileDialogue = ({ open, setOpen }) => {
       if (response.data.success) {
         dispatch(setUser(response.data.user));
         toast.success(response.data.message);
+        setOpen(false);
       }
     } catch (error) {
       console.error(error);
@@ -88,16 +89,17 @@ const UpdateProfileDialogue = ({ open, setOpen }) => {
         if (Array.isArray(errorData.errors)) {
           errorData.errors.forEach((err) => toast.error(err.message));
         } else {
-          toast.error(errorData.msg || "An unexpected error occurred");
+          toast.error(errorData.message || "An unexpected error occurred");
         }
       } else if (error.request) {
         toast.error("No response received from server");
       } else {
         toast.error(error.message);
       }
+    } finally {
+      // Always reset loading state when the request finishes (success or failure)
+      setLoading(false);
     }
-    setOpen(false);
-    console.log(input);
   };
 
   return (

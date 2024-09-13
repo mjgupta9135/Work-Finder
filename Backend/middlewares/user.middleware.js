@@ -5,7 +5,7 @@ const isAutheticated = async (req, res, next) => {
     const token = req.cookies.token;
     if (!token) {
       return res.status(400).json({
-        msg: "User not authenticated",
+        message: "User not authenticated",
         success: false,
       });
     }
@@ -13,7 +13,7 @@ const isAutheticated = async (req, res, next) => {
     const decode = await jwt.verify(token, process.env.SECRET_KEY);
     if (!decode) {
       res.status(400).json({
-        msg: "Invalid Token",
+        message: "Invalid Token",
         success: false,
       });
     }

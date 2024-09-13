@@ -36,7 +36,7 @@ const Login = () => {
         dispatch(setUser(response.data.user));
         navigate("/");
         console.log(response.data);
-        toast.success(response.data.msg);
+        toast.success(response.data.message);
       }
     } catch (error) {
       console.log(error);
@@ -49,8 +49,8 @@ const Login = () => {
           errorData.errors.forEach((err) => {
             toast.error(err.message);
           });
-        } else if (errorData.msg) {
-          toast.error(errorData.msg);
+        } else if (errorData.message) {
+          toast.error(errorData.message);
         } else {
           // Fallback error message
           toast.error("An unexpected error occurred");

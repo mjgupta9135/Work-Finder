@@ -24,7 +24,7 @@ export const register = async (req, res) => {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.json({
-        msg: "User already exists",
+        message: "User already exists",
         success: false,
       });
     }
@@ -64,13 +64,13 @@ export const login = async (req, res) => {
     // Check if user exists and if password matches
     if (!user || !hashedPass) {
       return res.status(400).json({
-        msg: "Incorrect email or password",
+        message: "Incorrect email or password",
         success: false,
       });
     }
     if (role != user.role) {
       return res.status(400).json({
-        msg: "Account dosen't exist with current role",
+        message: "Account dosen't exist with current role",
         success: false,
       });
     }
@@ -98,7 +98,7 @@ export const login = async (req, res) => {
         sameSite: "strict",
       })
       .json({
-        msg: `Welcome Back ${user.fullname} `,
+        message: `Welcome Back ${user.fullname} `,
         user,
         success: true,
       });
@@ -110,7 +110,7 @@ export const login = async (req, res) => {
 export const logout = async (req, res) => {
   try {
     return res.status(200).cookie("token", "", { maxAge: 0 }).json({
-      msg: "Logged out successfully",
+      message: "Logged out successfully",
       success: true,
     });
   } catch (error) {}
@@ -124,7 +124,7 @@ export const updateProfile = async (req, res) => {
     // Handle validation errors
     if (!response.success) {
       return res.status(400).json({
-        msg: "Validation failed",
+        message: "Validation failed",
         errors: response.error.errors,
         success: false,
       });
@@ -139,7 +139,7 @@ export const updateProfile = async (req, res) => {
     let user = await User.findById(userId);
     if (!user) {
       return res.status(400).json({
-        msg: "User Not Found",
+        message: "User Not Found",
         success: false,
       });
     }
@@ -177,14 +177,14 @@ export const updateProfile = async (req, res) => {
 
     // Send success response
     res.status(200).json({
-      msg: "Profile updated successfully",
+      message: "Profile updated successfully",
       user: updatedUser,
       success: true,
     });
   } catch (error) {
     console.error("Error updating profile:", error);
     res.status(500).json({
-      msg: "An error occurred while updating the profile",
+      message: "An error occurred while updating the profile",
       success: false,
     });
   }

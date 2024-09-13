@@ -65,8 +65,8 @@ const Signup = () => {
           errorData.errors.forEach((err) => {
             toast.error(err.message);
           });
-        } else if (errorData.msg) {
-          toast.error(errorData.msg);
+        } else if (errorData.message) {
+          toast.error(errorData.message);
         } else {
           // Fallback error message
           toast.error("An unexpected error occurred");
