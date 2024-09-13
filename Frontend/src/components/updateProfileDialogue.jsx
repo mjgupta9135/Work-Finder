@@ -47,11 +47,26 @@ const UpdateProfileDialogue = ({ open, setOpen }) => {
     formData.append("fullname", input.fullname);
     formData.append("email", input.email);
     formData.append("phone", input.phone);
+
+    // Append individual profile fields directly (no JSON stringify)
     formData.append("bio", input.bio);
-    formData.append("skills", input.skills);
+    if (input.skills && Array.isArray(input.skills)) {
+      input.skills.forEach((skill, index) =>
+        formData.append(`skills[${index}]`, skill)
+      );
+    } else {
+      formData.append("skills", input.skills); // If not array or already a string
+    }
+    formData.append("resume", input.resume);
+    formData.append("resumeOriginalName", input.resumeOriginalName);
+    formData.append("company", input.company);
+    formData.append("profilePhoto", input.profilePhoto);
+
+    // Append the file if it exists
     if (input.file) {
       formData.append("file", input.file);
     }
+
     try {
       const response = await axios.post(
         `${USER_API_END_POINT}/profile/update`,

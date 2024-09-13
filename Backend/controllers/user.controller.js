@@ -1,5 +1,6 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import {
   userLoginValidation,
@@ -129,7 +130,8 @@ export const updateProfile = async (req, res) => {
       });
     }
 
-    const { fullname, email, phone, profile } = response.data;
+    const { fullname, email, phone } = response.data;
+    const data = req.body;
 
     const userId = req.id;
 
@@ -146,15 +148,18 @@ export const updateProfile = async (req, res) => {
     if (fullname) user.fullname = fullname;
     if (email) user.email = email;
     if (phone) user.phone = phone;
-    if (profile) {
-      if (profile.bio) user.profile.bio = profile.bio;
-      if (profile.skills) user.profile.skills = profile.skills;
-      if (profile.resume) user.profile.resume = profile.resume;
-      if (profile.resumeOriginalName)
-        user.profile.resumeOriginalName = profile.resumeOriginalName;
-      if (profile.company) user.profile.company = profile.company;
-      if (profile.profilePhoto)
-        user.profile.profilePhoto = profile.profilePhoto;
+
+    user.profile.bio = data.bio ?? "";
+    user.profile.skills = data.skills ?? [];
+    user.profile.resume = data.resume ?? "";
+    user.profile.resumeOriginalName = data.resumeOriginalName ?? "";
+    user.profile.profilePhoto = data.profilePhoto ?? "";
+    if (data.company && mongoose.Types.ObjectId.isValid(data.company)) {
+      // Assign the valid company ObjectId to the user profile
+      user.profile.company = data.company;
+    } else if (data.company === undefined || data.company === null) {
+      // Set company to null if no company is provided
+      user.profile.company = null;
     }
 
     // Save the updated user

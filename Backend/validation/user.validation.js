@@ -33,12 +33,6 @@ export const userUpdateValidation = z.object({
       message: "Phone Number Must be at least 10 digits",
     })
     .optional(),
-  password: z
-    .string()
-    .min(6, {
-      message: "Password is required and must be at least 6 characters",
-    })
-    .optional(),
   profile: z
     .object({
       bio: z.string().optional(),
