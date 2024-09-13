@@ -7,10 +7,21 @@ import { Badge } from "@/components/ui/badge";
 import ApplicationTable from "@/components/applicationTable";
 import { Label } from "@/components/ui/label";
 import UpdateProfileDialogue from "@/components/updateProfileDialogue";
-const skills = ["HTML", "CSS", "JAVASCRIPT", "REACT.JS", "NODE.JS"];
+import { useSelector } from "react-redux";
+
 const profile = () => {
   const isResume = true;
   const [open, setOpen] = useState(false);
+  const { user } = useSelector((store) => store.auth);
+  const skills = user?.profile?.skills || []; // Ensure skills is always an array
+
+  // Check if skills has elements and if the first element is a string
+  const skillsArray =
+    Array.isArray(skills) && typeof skills[0] === "string"
+      ? skills[0].split(",").map((skill) => skill.trim()) // Split and trim whitespace
+      : [];
+  console.log(skillsArray);
+
   return (
     <div>
       <Navbar />
@@ -21,11 +32,8 @@ const profile = () => {
               <AvatarImage src="https://imgs.search.brave.com/IrjckpSv0CZsbpLfnrNzwh401w4BcZjUvJYL3U9I8cI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTI5/NzE1Mjg1NS92ZWN0/b3IvbG9nby13aXRo/LXRoZS1sZXR0ZXIt/Yy5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9XzZuSE9ReTNn/VjE2ZENIeGpUUUhM/b25JZWdWQU9YSm43/a012ZXJHdEZ3OD0" />
             </Avatar>
             <div>
-              <h1 className="font-semibold text-xl">Full Name</h1>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Reiciendis sapiente eligendi{" "}
-              </p>
+              <h1 className="font-semibold text-xl">{user?.fullname}</h1>
+              <p>{user?.profile?.bio}</p>
             </div>
           </div>
           <Button
@@ -40,25 +48,28 @@ const profile = () => {
         <div className="my-5">
           <div className="flex items-center gap-3 my-2">
             {" "}
-            <Mail /> <span>Mjguptacse@gmail.com</span>
+            <Mail /> <span>{user?.email}</span>
           </div>
           <div className="flex items-center gap-3 my-2">
-            <Contact /> <span>9135407413</span>
+            <Contact /> <span>{user?.phoneNumber}</span>
           </div>
         </div>
 
         <div>
           <h1>Skills</h1>
           <div className="flex items-center gap-2 my-4">
-            {skills.length !== 0 ? (
-              skills.map((item, index) => (
-                <Badge className="bg-black text-white " key={index}>
-                  {item}
+            {skillsArray.length > 0 ? (
+              skillsArray.map((skill, index) => (
+                <Badge
+                  className="bg-black text-white px-2 py-1 rounded-md"
+                  key={index}
+                >
+                  {skill.trim()} {/* Trim any extra spaces */}
                 </Badge>
               ))
             ) : (
               <span>NA</span>
-            )}{" "}
+            )}
           </div>
         </div>
         <div className=" flex w-full max-w-sm items-center gap-4 my-6">
