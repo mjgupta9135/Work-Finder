@@ -12,7 +12,7 @@ const profile = () => {
   return (
     <div>
       <Navbar />
-      <div className="max-w-7xl mx-auto bg-white border-gray-200 border-2 rounded-2xl my-5 p-8">
+      <div className="max-w-5xl mx-auto bg-white border-gray-200 border-2 rounded-2xl my-5 p-8">
         <div className="flex justify-between pb-5">
           <div className="flex items-center gap-4">
             <Avatar className="h-24 w-24">
@@ -70,7 +70,7 @@ const profile = () => {
           )}
         </div>
       </div>
-      <div className="max-w-4xl mx-auto application bg-white rounded-xl mt-8">
+      <div className="max-w-5xl mx-auto application bg-white rounded-xl mt-8">
         <h1 className="text-center font-bold text-2xl">Applied Jobs</h1>
         <ApplicationTable />
       </div>
