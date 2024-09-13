@@ -8,8 +8,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@radix-ui/react-popover";
+import { useSelector } from "react-redux";
 const Navbar = () => {
-  const user = false;
+  const { user } = useSelector((store) => store.auth);
   return (
     <div className="bg-white font-display flex items-center justify-between mx-auto max-w-7xl h-16 font-poppins">
       <div>
@@ -77,7 +78,9 @@ const Navbar = () => {
                 <div className="flex flex-col my-2 text-gray-600">
                   <div className="flex w-fit items-center gap-2 cursor-pointer">
                     <User2 />
-                    <Button varient="Link"> View Profile</Button>
+                    <Link to="/profile">
+                      <Button varient="Link"> View Profile</Button>
+                    </Link>
                   </div>
                   <div className="flex w-fit items-center gap-2 cursor-pointer">
                     <LogOut />

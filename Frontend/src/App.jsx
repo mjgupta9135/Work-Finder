@@ -5,6 +5,7 @@ import Signup from "./pages/signup";
 import Home from "./pages/home";
 import Jobs from "./pages/Jobs";
 import Browse from "./pages/browse";
+import Profile from "./pages/profile";
 const appRouter = createBrowserRouter([
   {
     path: "/",
@@ -25,6 +26,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/browse",
     element: <Browse />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
   },
 ]);
 function App() {
