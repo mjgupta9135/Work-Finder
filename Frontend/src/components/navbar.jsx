@@ -35,7 +35,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-white font-display flex items-center justify-between mx-auto max-w-7xl h-16 font-poppins">
+    <div className="bg-white font-display flex items-center justify-between mx-auto max-full px-16 h-16 shadow-2xl font-poppins">
       <div>
         <Link to="/">
           <h1 className="text-2xl font-bold ">
@@ -76,25 +76,25 @@ const Navbar = () => {
               <Avatar>
                 <AvatarImage
                   className="cursor-pointer"
-                  src="https://github.com/shadcn.png"
+                  src={user?.profile?.profilePhoto}
                   alt="@shadcn"
                 />{" "}
               </Avatar>
             </PopoverTrigger>
-            <PopoverContent className="w-80">
+            <PopoverContent className="w-80 bg-white shadow-xl px-5 py-2 animate-fadeInRight mt-3 rounded-b-md mr-4">
               <div className="my-4">
-                <div className="flex gap-4 space-y-2 items-center ">
+                <div className="flex gap-4 space-y-2 items-center  ">
                   <Avatar>
                     <AvatarImage
                       className="cursor-pointer"
-                      src="https://github.com/shadcn.png"
+                      src={user?.profile?.profilePhoto}
                       alt="@shadcn"
                     />{" "}
                   </Avatar>
                   <div className="">
-                    <h4 className="font-medium">Mrityunjay Kumar Gupta</h4>
+                    <h4 className="font-medium">{user?.fullname}</h4>
                     <p className="text-sm text-muted-foreground">
-                      I Am A Full Stack Developer
+                      {user?.profile?.bio}
                     </p>
                   </div>
                 </div>

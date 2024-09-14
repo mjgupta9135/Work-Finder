@@ -9,7 +9,6 @@ import {
 } from "../validation/user.validation.js";
 import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
-import uploadBase64ToCloudinary from "../utils/datauri.js";
 
 export const register = async (req, res) => {
   try {
@@ -31,6 +30,9 @@ export const register = async (req, res) => {
         success: false,
       });
     }
+    const file = req.file;
+    const fileUri = getDataUri(file);
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
       fullname,
@@ -38,6 +40,9 @@ export const register = async (req, res) => {
       phone,
       password: hashedPassword,
       role,
+      profile: {
+        profilePhoto: cloudResponse.secure_url,
+      },
     });
     await newUser.save();
     return res.status(200).json({
@@ -132,7 +137,7 @@ export const updateProfile = async (req, res) => {
         success: false,
       });
     }
-    //setup cloudinary details
+    // setup cloudinary details
     const file = req.file;
     const fileUri = getDataUri(file);
     const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
@@ -157,9 +162,7 @@ export const updateProfile = async (req, res) => {
 
     user.profile.bio = data.bio ?? "";
     user.profile.skills = data.skills ?? [];
-    user.profile.resume = data.resume ?? "";
-    user.profile.resumeOriginalName = data.resumeOriginalName ?? "";
-    user.profile.profilePhoto = data.profilePhoto ?? "";
+
     if (data.company && mongoose.Types.ObjectId.isValid(data.company)) {
       // Assign the valid company ObjectId to the user profile
       user.profile.company = data.company;

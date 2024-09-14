@@ -57,11 +57,6 @@ const UpdateProfileDialogue = ({ open, setOpen }) => {
     } else {
       formData.append("skills", input.skills); // If not array or already a string
     }
-    formData.append("resume", input.resume);
-    formData.append("resumeOriginalName", input.resumeOriginalName);
-    formData.append("company", input.company);
-    formData.append("profilePhoto", input.profilePhoto);
-
     // Append the file if it exists
     if (input.file) {
       formData.append("file", input.file);
@@ -199,9 +194,19 @@ const UpdateProfileDialogue = ({ open, setOpen }) => {
               </div>
             </div>
             <DialogFooter>
-              <Button type="submit" className="w-full my-4 bg-black text-white">
+              <Button
+                type="submit"
+                className="w-full my-4 bg-black text-white"
+                aria-label={loading ? "Updating, please wait" : "Update"}
+              >
                 {loading ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <>
+                    <Loader2
+                      className="mr-2 h-4 w-4 animate-spin"
+                      aria-hidden="true"
+                    />
+                    Please Wait
+                  </>
                 ) : (
                   "Update"
                 )}
