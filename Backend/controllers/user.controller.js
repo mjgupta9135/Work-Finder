@@ -7,6 +7,8 @@ import {
   userSignupValidation,
   userUpdateValidation,
 } from "../validation/user.validation.js";
+import getDataUri from "../utils/datauri.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export const register = async (req, res) => {
   try {
@@ -83,7 +85,7 @@ export const login = async (req, res) => {
       _id: user._id,
       fullname: user.fullname,
       email: user.email,
-      phoneNumber: user.phone,
+      phone: user.phone,
       role: user.role,
       profile: user.profile,
     };
@@ -129,10 +131,13 @@ export const updateProfile = async (req, res) => {
         success: false,
       });
     }
+    //setup cloudinary details
+    const file = req.file;
+    const fileUri = getDataUri(file);
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
     const { fullname, email, phone } = response.data;
     const data = req.body;
-
     const userId = req.id;
 
     // Find user by ID
@@ -160,6 +165,11 @@ export const updateProfile = async (req, res) => {
     } else if (data.company === undefined || data.company === null) {
       // Set company to null if no company is provided
       user.profile.company = null;
+    }
+
+    if (cloudResponse) {
+      user.profile.resume = cloudResponse.secure_url;
+      user.profile.resumeOriginalName = file.originalname;
     }
 
     // Save the updated user

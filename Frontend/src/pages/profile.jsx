@@ -51,7 +51,7 @@ const profile = () => {
             <Mail /> <span>{user?.email}</span>
           </div>
           <div className="flex items-center gap-3 my-2">
-            <Contact /> <span>{user?.phoneNumber}</span>
+            <Contact /> <span>{user?.phone}</span>
           </div>
         </div>
 
@@ -76,11 +76,11 @@ const profile = () => {
           <Label className="font-bold text-lg">Resume:-</Label>
           {isResume ? (
             <a
+              href={user?.profile?.resume}
               className="border-2 py-1 rounded-full px-6 hover:bg-blue-700 hover:border-white hover:text-white ease-in duration-200"
-              target="blank"
-              href="https://www.youtube.com"
+              target="_blank"
             >
-              Mrityunjay_Resume.pdf
+              {user?.profile?.resumeOriginalName}
             </a>
           ) : (
             <span>NA</span>

@@ -24,7 +24,7 @@ const UpdateProfileDialogue = ({ open, setOpen }) => {
   const [input, setInput] = useState({
     fullname: user?.fullname || "",
     email: user?.email || "",
-    phone: user?.phoneNumber || "",
+    phone: user?.phone || "",
     bio: user?.profile?.bio || "",
     skills: user?.profile?.skills || "",
     file: user?.profile?.resume || null,
