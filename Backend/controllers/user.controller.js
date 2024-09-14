@@ -9,6 +9,7 @@ import {
 } from "../validation/user.validation.js";
 import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
+import uploadBase64ToCloudinary from "../utils/datauri.js";
 
 export const register = async (req, res) => {
   try {
