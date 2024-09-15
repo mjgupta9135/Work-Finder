@@ -1,6 +1,6 @@
 # WorkFinder
 
-WorkFinder is a job portal application developed using the MERN stack (MongoDB, Express.js, React, and Node.js). It connects job seekers with employers and offers features such as job posting, search, and real-time messaging.
+WorkFinder is a job portal application developed using the MERN stack (MongoDB, Express.js, React, and Node.js). It connects job seekers with employers and offers features such as job posting, search, and real-time messaging
 
 ## Features
 - **User Authentication**: Secure login and registration.
