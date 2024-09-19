@@ -1,4 +1,4 @@
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/navbar"
 import React from "react";
 import FilterCard from "@/components/filterCard";
 import Job from "@/components/job";
