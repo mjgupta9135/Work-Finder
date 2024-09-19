@@ -84,13 +84,6 @@ const Navbar = () => {
             <PopoverContent className="w-80 bg-white shadow-xl px-5 py-2 animate-fadeInRight mt-3 rounded-b-md mr-4">
               <div className="my-4">
                 <div className="flex gap-4 space-y-2 items-center  ">
-                  <Avatar>
-                    <AvatarImage
-                      className="cursor-pointer"
-                      src={user?.profile?.profilePhoto}
-                      alt="@shadcn"
-                    />{" "}
-                  </Avatar>
                   <div className="">
                     <h4 className="font-medium">{user?.fullname}</h4>
                     <p className="text-sm text-muted-foreground">
