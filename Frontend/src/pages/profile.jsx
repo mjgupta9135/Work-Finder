@@ -20,7 +20,6 @@ const profile = () => {
     Array.isArray(skills) && typeof skills[0] === "string"
       ? skills[0].split(",").map((skill) => skill.trim()) // Split and trim whitespace
       : [];
-  console.log(skillsArray);
 
   return (
     <div>

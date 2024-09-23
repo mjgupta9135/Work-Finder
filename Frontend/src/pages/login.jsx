@@ -35,7 +35,7 @@ const Login = () => {
       if (response.data.success) {
         dispatch(setUser(response.data.user));
         navigate("/profile");
-        console.log(response.data);
+
         toast.success(response.data.message);
       }
     } catch (error) {
