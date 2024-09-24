@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./navbar";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
@@ -6,20 +6,67 @@ import { useParams } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { JOB_API_END_POINT } from "@/utils/constant";
+import { APPLICATION_API_END_POINT, JOB_API_END_POINT } from "@/utils/constant";
 import { setSingleJob } from "@/slices/jobSlice";
+import { toast } from "sonner";
 
 const jobDetails = () => {
   const { singleJob } = useSelector((store) => store.jobs);
   const { user } = useSelector((store) => store.auth);
-  const isApplied =
+
+  const isInitiallyApplied =
     singleJob?.application?.some(
-      (application) => application.applicant === user?._id
+      (application) => application?.applicant === user?._id
     ) || false;
+  const [isApplied, setIsApplied] = useState(isInitiallyApplied);
   const params = useParams();
   const jobId = params.id;
 
   const dispatch = useDispatch();
+
+  const applyJobHandler = async () => {
+    try {
+      const res = await axios.get(
+        `${APPLICATION_API_END_POINT}/apply/${jobId}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        setIsApplied(true);
+        const updateSingleJob = {
+          ...singleJob,
+          application: [...singleJob.application, { applicant: user?._id }],
+        };
+        dispatch(setSingleJob(updateSingleJob));
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      if (error.response) {
+        const errorData = error.response.data;
+        console.log(errorData);
+        if (Array.isArray(errorData.errors)) {
+          // Display each error message if errors is an array
+          errorData.errors.forEach((err) => {
+            toast.error(err.message);
+          });
+        } else if (errorData.message) {
+          toast.error(errorData.message);
+        } else {
+          // Fallback error message
+          toast.error("An unexpected error occurred");
+        }
+      } else if (error.request) {
+        // Handle no response received
+        toast.error("No response received from server");
+      } else {
+        // Handle error in setting up the request
+        toast.error(error.message);
+      }
+    }
+  };
 
   useEffect(() => {
     const fetchSingleJob = async () => {
@@ -28,8 +75,12 @@ const jobDetails = () => {
           withCredentials: true,
         });
         if (res.data.success) {
-          console.log(res);
           dispatch(setSingleJob(res.data.job));
+          setIsApplied(
+            res.data.job.application.some(
+              (application) => application.applicant === user?._id
+            )
+          );
         }
       } catch (error) {
         console.log(error);
@@ -57,19 +108,18 @@ const jobDetails = () => {
               </Badge>
             </div>
           </div>
-          {isApplied ? (
-            <Button
-              disabled
-              className="bg-gray-300  font-bold rounded-lg cursor-not-allowed"
-              variant="outline"
-            >
-              Already Applied
-            </Button>
-          ) : (
-            <Button className="bg-black text-white" variant="outline">
-              Apply Now
-            </Button>
-          )}
+          <Button
+            onClick={isApplied ? null : applyJobHandler}
+            disabled={isApplied}
+            className={`font-bold rounded-lg ${
+              isApplied
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-black text-white"
+            }`}
+            variant="outline"
+          >
+            {isApplied ? "Already Applied" : "Apply Now"}
+          </Button>
         </div>
         <h1 className="border-b-2 border-b-gray-300 font-semibold py-4">
           Job Description
