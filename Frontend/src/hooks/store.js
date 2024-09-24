@@ -5,7 +5,7 @@ import jobSlice from "@/slices/jobSlice";
 const store = configureStore({
   reducer: {
     auth: authSlice,
-    job: jobSlice,
+    jobs: jobSlice,
   },
 });
 export default store;
