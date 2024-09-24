@@ -6,16 +6,20 @@ import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { COMPANY_API_END_POINT } from "@/utils/constant";
+import { useDispatch } from "react-redux";
+import { setSingleCompany } from "@/slices/companySlice";
+import { toast } from "sonner";
 
-const createCompany = () => {
+const CreateCompany = () => {
   const navigate = useNavigate();
-  const [companyName, setCompanyName] = useState();
+  const [companyName, setCompanyName] = useState("");
+  const dispatch = useDispatch();
 
   const registerNewCompany = async () => {
     try {
       const res = await axios.post(
         `${COMPANY_API_END_POINT}/register`,
-        { companyName },
+        { name: companyName.trim() },
         {
           headers: {
             "Content-Type": "application/json",
@@ -24,14 +28,32 @@ const createCompany = () => {
         }
       );
       if (res?.data?.success) {
+        dispatch(setSingleCompany(res.data.company));
         toast.success(res.data.message);
         const companyId = res?.data?.company?._id;
         navigate(`/admin/companies/${companyId}`);
       }
     } catch (error) {
       console.log(error);
+      if (error.response) {
+        const errorData = error.response.data;
+        if (Array.isArray(errorData.errors)) {
+          errorData.errors.forEach((err) => {
+            toast.error(err.message);
+          });
+        } else if (errorData.message) {
+          toast.error(errorData.message);
+        } else {
+          toast.error("An unexpected error occurred");
+        }
+      } else if (error.request) {
+        toast.error("No response received from server");
+      } else {
+        toast.error(error.message);
+      }
     }
   };
+
   return (
     <>
       <Navbar />
@@ -48,7 +70,8 @@ const createCompany = () => {
         <Input
           type="text"
           className="my-2"
-          onChange={(e) => setCompanyName(e.target.value)}
+          value={companyName} // Bind the state to input value
+          onChange={(e) => setCompanyName(e.target.value)} // Update state on input change
           placeholder="Job Hunt, Microsoft etc."
         />
 
@@ -59,11 +82,13 @@ const createCompany = () => {
           >
             Cancel
           </Button>
-          <Button className="bg-black text-white">Continue</Button>
+          <Button onClick={registerNewCompany} className="bg-black text-white">
+            Continue
+          </Button>
         </div>
       </div>
     </>
   );
 };
 
-export default createCompany;
+export default CreateCompany;
