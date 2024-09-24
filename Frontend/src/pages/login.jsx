@@ -34,7 +34,12 @@ const Login = () => {
       });
       if (response.data.success) {
         dispatch(setUser(response.data.user));
-        navigate("/profile");
+
+        if (response?.data?.user?.role === "recruiter") {
+          navigate("/admin/companies");
+        } else {
+          navigate("/profile");
+        }
 
         toast.success(response.data.message);
       }
