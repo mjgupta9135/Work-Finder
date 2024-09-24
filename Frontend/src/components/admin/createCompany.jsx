@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../navbar";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { COMPANY_API_END_POINT } from "@/utils/constant";
 
 const createCompany = () => {
   const navigate = useNavigate();
+  const [companyName, setCompanyName] = useState();
 
   const registerNewCompany = async () => {
     try {
-      const res = await axios.post();
+      const res = await axios.post(
+        `${COMPANY_API_END_POINT}/register`,
+        { companyName },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      if (res?.data?.success) {
+        toast.success(res.data.message);
+        const companyId = res?.data?.company?._id;
+        navigate(`/admin/companies/${companyId}`);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -32,6 +48,7 @@ const createCompany = () => {
         <Input
           type="text"
           className="my-2"
+          onChange={(e) => setCompanyName(e.target.value)}
           placeholder="Job Hunt, Microsoft etc."
         />
 
