@@ -16,9 +16,23 @@ import { useNavigate } from "react-router-dom";
 
 const adminJobsTable = () => {
   useGetAllCompanies();
-  const { allAdminJobs } = useSelector((store) => store.jobs);
+  const { allAdminJobs, searchJob } = useSelector((store) => store.jobs);
   const [filterJobs, setFilterJobs] = useState(allAdminJobs);
   const navigate = useNavigate();
+  useEffect(() => {
+    const filteredJobs =
+      allAdminJobs.length > 0 &&
+      allAdminJobs.filter((job) => {
+        if (searchJob) {
+          return job.company.name
+            .toLowerCase()
+            .includes(searchJob.toLowerCase());
+        }
+        return true;
+      });
+
+    setFilterJobs(filteredJobs);
+  }, [allAdminJobs, searchJob]);
 
   return (
     <div>
@@ -34,14 +48,14 @@ const adminJobsTable = () => {
         </TableHeader>
 
         <TableBody>
-          {allAdminJobs.length === 0 ? (
+          {filterJobs.length === 0 ? (
             <TableRow>
               <TableCell colSpan={4} className="text-center">
                 You haven't posted any job yet
               </TableCell>
             </TableRow>
           ) : (
-            allAdminJobs.map((job) => (
+            filterJobs.map((job) => (
               <TableRow key={job._id}>
                 {" "}
                 <TableCell className="text-center">

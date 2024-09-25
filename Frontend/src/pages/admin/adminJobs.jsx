@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { setSearchCompany } from "@/slices/companySlice";
 import AdminJobsTable from "@/components/admin/adminJobsTable";
 import useGetAdminJobs from "@/hooks/useGetAdminJobs";
+import { setSearchJob } from "@/slices/jobSlice";
 
 const adminJobs = () => {
   useGetAdminJobs();
@@ -14,7 +15,7 @@ const adminJobs = () => {
   const [input, setInput] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(setSearchCompany(input));
+    dispatch(setSearchJob(input));
   }, [input]);
   return (
     <>

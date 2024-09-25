@@ -57,7 +57,7 @@ export const getCompany = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(err);
+    console.log(error);
   }
 };
 
