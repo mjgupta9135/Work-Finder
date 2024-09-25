@@ -24,9 +24,10 @@ const adminJobsTable = () => {
       allAdminJobs.length > 0 &&
       allAdminJobs.filter((job) => {
         if (searchJob) {
-          return job.company.name
-            .toLowerCase()
-            .includes(searchJob.toLowerCase());
+          return (
+            job.company.name.toLowerCase().includes(searchJob.toLowerCase()) ||
+            job?.title?.toLowerCase().includes(searchJob.toLowerCase())
+          );
         }
         return true;
       });
