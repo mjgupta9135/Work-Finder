@@ -6,6 +6,9 @@ export const jobPostValidation = z.object({
   description: z.string({
     message: "Description Must be string",
   }),
+  companyId: z.string({
+    message: "Company Must be Provided",
+  }),
   requirements: z.string({
     message: "Description Must be string",
   }),

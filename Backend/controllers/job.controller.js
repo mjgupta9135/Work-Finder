@@ -102,6 +102,8 @@ export const allJobPosted = async (req, res) => {
     const userId = req.id;
     const jobs = await Job.find({
       createdBy: userId,
+    }).populate({
+      path: "company",
     });
     if (!jobs) {
       res.status(404).json({

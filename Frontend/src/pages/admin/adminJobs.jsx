@@ -6,8 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setSearchCompany } from "@/slices/companySlice";
 import AdminJobsTable from "@/components/admin/adminJobsTable";
+import useGetAdminJobs from "@/hooks/useGetAdminJobs";
 
 const adminJobs = () => {
+  useGetAdminJobs();
   const navigate = useNavigate();
   const [input, setInput] = useState("");
   const dispatch = useDispatch();
