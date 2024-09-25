@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import useGetCompanyById from "@/hooks/useGetCompanyById";
 
 const companySetup = () => {
   const [input, setInput] = useState({
@@ -18,15 +19,16 @@ const companySetup = () => {
     location: "",
     file: null,
   });
+  const params = useParams();
+  const navigate = useNavigate();
+  const companyId = params.id;
+  useGetCompanyById(companyId);
   const { singleCompany } = useSelector((store) => store.company);
   console.log(singleCompany);
   const [loading, setLoading] = useState(false);
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
-  const params = useParams();
-  const navigate = useNavigate();
-  const companyId = params.id;
 
   const changeFileHandler = (e) => {
     const file = e.target.files?.[0];
@@ -41,6 +43,7 @@ const companySetup = () => {
       description: singleCompany.description || "",
       website: singleCompany.website || "",
       location: singleCompany.location || "",
+      logo: singleCompany.logo || "",
     });
   }, [singleCompany]);
 
