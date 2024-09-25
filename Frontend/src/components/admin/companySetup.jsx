@@ -54,7 +54,7 @@ const companySetup = () => {
 
       if (res.data.succes) {
         toast.success(res.data.message);
-        navigate("/admin/companies");
+        // navigate("/admin/companies");
       }
     } catch (error) {
       console.log(error);
@@ -91,6 +91,7 @@ const companySetup = () => {
         <form onSubmit={submitHandler}>
           <div className="flex items-center gap-5 p-8 ">
             <Button
+              onClick={() => navigate("/admin/companies")}
               variant="outline"
               className="flex items-center gap-2 text-gray-500 font-semibold"
             >
