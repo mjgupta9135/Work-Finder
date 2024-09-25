@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../navbar";
 import { Button } from "../ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { COMPANY_API_END_POINT } from "@/utils/constant";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "axios";
+import { useSelector } from "react-redux";
+
 const companySetup = () => {
   const [input, setInput] = useState({
     name: "",
@@ -16,6 +18,8 @@ const companySetup = () => {
     location: "",
     file: null,
   });
+  const { singleCompany } = useSelector((store) => store.company);
+  console.log(singleCompany);
   const [loading, setLoading] = useState(false);
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -23,10 +27,23 @@ const companySetup = () => {
   const params = useParams();
   const navigate = useNavigate();
   const companyId = params.id;
+
   const changeFileHandler = (e) => {
     const file = e.target.files?.[0];
     setInput({ ...input, file });
   };
+
+  console.log({ singleCompany });
+
+  useEffect(() => {
+    setInput({
+      name: singleCompany.name || "",
+      description: singleCompany.description || "",
+      website: singleCompany.website || "",
+      location: singleCompany.location || "",
+    });
+  }, [singleCompany]);
+
   const submitHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -52,9 +69,10 @@ const companySetup = () => {
         }
       );
 
-      if (res.data.succes) {
+      if (res.data.success) {
+        console.log(res.data);
         toast.success(res.data.message);
-        // navigate("/admin/companies");
+        navigate("/admin/companies"); // Only navigate on success
       }
     } catch (error) {
       console.log(error);
@@ -81,7 +99,7 @@ const companySetup = () => {
         toast.error(error.message);
       }
     } finally {
-      setLoading(false);
+      setLoading(false); // Loading ends regardless of success or error
     }
   };
   return (
@@ -147,9 +165,16 @@ const companySetup = () => {
             </div>
           </div>
 
-          <Button className="w-full text-white bg-black mt-8" type="submit">
-            Update
-          </Button>
+          {loading ? (
+            <Button className="w-full my-4 bg-black text-white">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please Wait
+            </Button>
+          ) : (
+            <Button type="submit" className=" w-full my-4 bg-black text-white">
+              Update
+            </Button>
+          )}
         </form>
       </div>
     </>

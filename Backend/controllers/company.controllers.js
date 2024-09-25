@@ -65,7 +65,6 @@ export const getCompany = async (req, res) => {
 
 export const getCompanyById = async (req, res) => {
   try {
-    console.log(req.params);
     const companyId = req.params.id;
     const company = await Company.findById(companyId);
     if (!company) {

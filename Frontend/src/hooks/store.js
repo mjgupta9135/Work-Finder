@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authSlice from "../slices/authSlice";
 import jobSlice from "@/slices/jobSlice";
+import companySlice from "@/slices/companySlice";
 import {
   persistStore,
   persistReducer,
@@ -12,7 +13,6 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import companySlice from "@/slices/companySlice";
 
 const persistConfig = {
   key: "root",
