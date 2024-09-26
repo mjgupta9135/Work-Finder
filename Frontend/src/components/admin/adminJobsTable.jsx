@@ -38,6 +38,7 @@ const adminJobsTable = () => {
   return (
     <div>
       <Table>
+        <TableCaption>A List of your recently Posted Jobs</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="text-center">Company Name</TableHead>
