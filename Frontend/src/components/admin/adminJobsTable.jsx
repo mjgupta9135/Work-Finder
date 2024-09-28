@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "../ui/table";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Edit2, MoreHorizontal } from "lucide-react";
+import { Edit2, Eye, MoreHorizontal } from "lucide-react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -71,13 +71,22 @@ const adminJobsTable = () => {
                     <PopoverTrigger>
                       <MoreHorizontal />
                     </PopoverTrigger>
-                    <PopoverContent className="w-28">
+                    <PopoverContent className="w-42 bg-white">
                       <div
                         onClick={() => navigate(`/admin/companies`)}
                         className="flex items-center gap-4 w-fit cursor-pointer"
                       >
                         <Edit2 className="w-4" />
                         <span>Edit</span>
+                      </div>
+                      <div
+                        onClick={() =>
+                          navigate(`/admin/jobs/${job._id}/applicants`)
+                        }
+                        className="flex items-center w-fit gap-4 mt-4 cursor-pointer"
+                      >
+                        <Eye className="w-4" />
+                        <span>Applicants</span>
                       </div>
                     </PopoverContent>
                   </Popover>

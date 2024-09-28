@@ -16,6 +16,7 @@ import {
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 const postJob = () => {
   const [input, setInput] = useState({
@@ -83,6 +84,8 @@ const postJob = () => {
         // Handle error in setting up the request
         toast.error(error.message);
       }
+    } finally {
+      setLoading(false);
     }
   };
   const { allCompany } = useSelector((store) => store.company);
@@ -201,9 +204,16 @@ const postJob = () => {
             )}
           </div>
 
-          <Button className="text-white bg-black w-full mt-4">
-            Post New Job
-          </Button>
+          {loading ? (
+            <Button className="w-full my-4 bg-black text-white">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please Wait
+            </Button>
+          ) : (
+            <Button type="submit" className=" w-full my-4 bg-black text-white">
+              Post New JOB
+            </Button>
+          )}
 
           {allCompany.length === 0 && (
             <p className="text-xs text-red-600 font-bold text-center my-3">
