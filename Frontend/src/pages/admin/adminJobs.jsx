@@ -28,7 +28,7 @@ const adminJobs = () => {
             placeholder="Filter By Name"
           ></Input>
           <Button
-            onClick={() => navigate("/admin/companies/create")}
+            onClick={() => navigate("/admin/jobs/create")}
             variant="outline"
             className="bg-black text-white"
           >
