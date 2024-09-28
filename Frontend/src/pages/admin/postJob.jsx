@@ -14,6 +14,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const postJob = () => {
   const [input, setInput] = useState({
@@ -27,13 +29,21 @@ const postJob = () => {
     position: 0,
     companyId: "",
   });
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const selectChangeHander = (value) => {
     setInput({ ...input, companyId: value });
   };
   const changeEventHandler = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    // If the field should be a number, parse it as a number
+    const newValue = ["salary", "experience", "position"].includes(name)
+      ? Number(value)
+      : value;
+
+    setInput({ ...input, [name]: newValue });
   };
 
   const submitHandler = async (e) => {
@@ -46,8 +56,34 @@ const postJob = () => {
         },
         withCredentials: true,
       });
-    } catch (error) {}
-    console.log(input);
+      if (res?.data.success) {
+        navigate("/admin/jobs");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      if (error.response) {
+        const errorData = error.response.data;
+        console.log(errorData);
+        if (Array.isArray(errorData.errors)) {
+          // Display each error message if errors is an array
+          errorData.errors.forEach((err) => {
+            toast.error(err.message);
+          });
+        } else if (errorData.message) {
+          toast.error(errorData.message);
+        } else {
+          // Fallback error message
+          toast.error("An unexpected error occurred");
+        }
+      } else if (error.request) {
+        // Handle no response received
+        toast.error("No response received from server");
+      } else {
+        // Handle error in setting up the request
+        toast.error(error.message);
+      }
+    }
   };
   const { allCompany } = useSelector((store) => store.company);
 
