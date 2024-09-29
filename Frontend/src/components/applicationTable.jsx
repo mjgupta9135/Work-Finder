@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "./ui/badge";
 import { useSelector } from "react-redux";
+import clsx from "clsx"; // To help with conditional class names
 
 const applicationTable = () => {
   const { allAppliedJobs } = useSelector((store) => store.jobs);
@@ -39,7 +40,14 @@ const applicationTable = () => {
                   {item?.job?.company?.name}
                 </TableCell>
                 <TableCell className="text-center">
-                  <Badge className="text-xs bg-black text-white">
+                  <Badge
+                    className={clsx(
+                      "text-xs text-white", // Base styles for all statuses
+                      item?.status === "pending" && "bg-gray-400",
+                      item?.status === "accepted" && "bg-green-600",
+                      item?.status === "rejected" && "bg-red-800"
+                    )}
+                  >
                     {item?.status}
                   </Badge>
                 </TableCell>
