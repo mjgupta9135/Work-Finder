@@ -1,9 +1,8 @@
+import React, { memo } from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -12,7 +11,7 @@ import { Badge } from "./ui/badge";
 import { useSelector } from "react-redux";
 import clsx from "clsx"; // To help with conditional class names
 
-const applicationTable = () => {
+const ApplicationTable = () => {
   const { allAppliedJobs } = useSelector((store) => store.jobs);
 
   return (
@@ -31,13 +30,13 @@ const applicationTable = () => {
             {allAppliedJobs.map((item, index) => (
               <TableRow key={index} className="bg-white">
                 <TableCell className="text-center">
-                  {item?.createdAt?.split("T")[0]}
+                  {item?.createdAt?.split("T")[0] || "N/A"}
                 </TableCell>
                 <TableCell className="text-center">
-                  {item?.job?.title}
+                  {item?.job?.title || "N/A"}
                 </TableCell>
                 <TableCell className="text-center">
-                  {item?.job?.company?.name}
+                  {item?.job?.company?.name || "N/A"}
                 </TableCell>
                 <TableCell className="text-center">
                   <Badge
@@ -48,7 +47,7 @@ const applicationTable = () => {
                       item?.status === "rejected" && "bg-red-800"
                     )}
                   >
-                    {item?.status}
+                    {item?.status || "Unknown"}
                   </Badge>
                 </TableCell>
               </TableRow>
@@ -64,4 +63,4 @@ const applicationTable = () => {
   );
 };
 
-export default applicationTable;
+export default memo(ApplicationTable);
