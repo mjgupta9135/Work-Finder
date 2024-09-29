@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/navbar";
 import { Label } from "../components/ui/label";
@@ -90,6 +90,13 @@ const Signup = () => {
   const changeFilehandler = (e) => {
     setInput({ ...input, file: e.target.files?.[0] });
   };
+
+  const { user } = useSelector((store) => store.auth);
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  });
 
   return (
     <div>

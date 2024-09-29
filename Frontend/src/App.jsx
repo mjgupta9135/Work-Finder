@@ -13,6 +13,7 @@ import CreateCompany from "./components/admin/createCompany";
 import CompanySetup from "./components/admin/companySetup";
 import PostJob from "./pages/admin/postJob";
 import JobApplicants from "./components/admin/jobApplicants";
+import ProtectedRoute from "./components/admin/protectedRoute"; // Ensure it's imported
 
 const appRouter = createBrowserRouter([
   {
@@ -44,32 +45,57 @@ const appRouter = createBrowserRouter([
     element: <Profile />,
   },
 
-  //admin side route
+  // Admin-side routes with protection
   {
     path: "admin/companies",
-    element: <Companies />,
+    element: (
+      <ProtectedRoute>
+        <Companies />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "admin/jobs",
-    element: <AdminJobs />,
+    element: (
+      <ProtectedRoute>
+        <AdminJobs />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "admin/companies/create",
-    element: <CreateCompany />,
+    element: (
+      <ProtectedRoute>
+        <CreateCompany />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "admin/companies/:id",
-    element: <CompanySetup />,
+    element: (
+      <ProtectedRoute>
+        <CompanySetup />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "admin/jobs/create",
-    element: <PostJob />,
+    element: (
+      <ProtectedRoute>
+        <PostJob />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "admin/jobs/:id/applicants",
-    element: <JobApplicants />,
+    element: (
+      <ProtectedRoute>
+        <JobApplicants />
+      </ProtectedRoute>
+    ),
   },
 ]);
+
 function App() {
   return <RouterProvider router={appRouter} />;
 }

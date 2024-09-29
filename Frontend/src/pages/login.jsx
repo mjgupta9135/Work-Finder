@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
@@ -20,7 +20,7 @@ const Login = () => {
     role: "",
   });
   const dispatch = useDispatch();
-  const { loading } = useSelector((store) => store.auth);
+  const { loading, user } = useSelector((store) => store.auth);
   const submitHandler = async (e) => {
     e.preventDefault();
 
@@ -74,6 +74,12 @@ const Login = () => {
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  });
 
   return (
     <div>
