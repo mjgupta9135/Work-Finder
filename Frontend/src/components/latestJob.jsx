@@ -1,6 +1,7 @@
 import React from "react";
 import LatestJobCards from "./latestJobCards";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const latestJob = () => {
   const { allJobs } = useSelector((store) => store.jobs);
