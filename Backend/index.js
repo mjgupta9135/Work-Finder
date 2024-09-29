@@ -7,8 +7,11 @@ import connectDB from "./utils/db.js";
 import companyRouter from "./routes/company.route.js";
 import jobRouter from "./routes/job.routes.js";
 import applicationRouter from "./routes/application.route.js";
+import path from "path";
 dotenv.config({});
 const app = express();
+
+const _dirname = path.resolve();
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,6 +27,11 @@ app.use("/api/v1/user", userRoute);
 app.use("/api/v1/company", companyRouter);
 app.use("/api/v1/job", jobRouter);
 app.use("/api/v1/application", applicationRouter);
+
+app.use(express.static(path.join(_dirname, "/Frontend/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(_dirname, "Frontend", "dist", "index.html"));
+});
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
