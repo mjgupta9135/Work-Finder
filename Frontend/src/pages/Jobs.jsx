@@ -39,13 +39,13 @@ const Jobs = () => {
             <FilterCard />
           </div>
 
-          {filteredJobs.length <= 0 ? (
+          {filteredJobs?.length <= 0 ? (
             <span>Job Not Found</span>
           ) : (
             <div className="flex-1 h-[88vh] pb-5 overflow-y-auto scrollbar-hide">
               <div className="grid grid-cols-3 gap-4">
-                {filteredJobs.map((job) => (
-                  <div key={job._id}>
+                {filteredJobs?.map((job) => (
+                  <div key={job?._id}>
                     <Job job={job} />
                   </div>
                 ))}

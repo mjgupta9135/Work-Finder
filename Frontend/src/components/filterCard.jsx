@@ -26,21 +26,20 @@ const FilterCard = () => {
   const dispatch = useDispatch();
   const changeHandler = (value) => {
     setSelectedValue(value);
-    console.log(selectedValue);
   };
 
   useEffect(() => {
     dispatch(setSearchQuery(selectedValue));
-  }, [selectedValue]);
+  }, [selectedValue, dispatch]);
   return (
     <div className="w-full bg-white p-2 rounded-md ">
       <h1 className="font-bold text-lg">Filter Jobs</h1>
       <hr className="mt-3" />
       <RadioGroup value={selectedValue} onValueChange={changeHandler}>
-        {filterData.map((data, index) => (
+        {filterData?.map((data, index) => (
           <div key={index}>
-            <h1 className="font-bold text-lg">{data.filterType}</h1>
-            {data.array.map((item, idx) => {
+            <h1 className="font-bold text-lg">{data?.filterType}</h1>
+            {data?.array.map((item, idx) => {
               const itemId = `r${index}-${idx}`; // Declare inside curly braces
 
               return (

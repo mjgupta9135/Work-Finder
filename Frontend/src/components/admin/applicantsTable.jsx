@@ -27,8 +27,8 @@ const applicantsTable = () => {
         { status },
         { withCredentials: true }
       );
-      if (res.data.success) {
-        toast.success(res.data.message);
+      if (res?.data?.success) {
+        toast.success(res?.data?.message);
       }
     } catch (error) {
       console.log(error);
@@ -49,23 +49,23 @@ const applicantsTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {applicationArray.map((item) => (
+          {applicationArray?.map((item) => (
             <TableRow key="item._id">
-              <TableCell>{item.applicant.fullname}</TableCell>
-              <TableCell>{item.applicant.email}</TableCell>
-              <TableCell>{item.applicant.phone}</TableCell>
+              <TableCell>{item?.applicant?.fullname}</TableCell>
+              <TableCell>{item?.applicant?.email}</TableCell>
+              <TableCell>{item?.applicant?.phone}</TableCell>
               <TableCell>
                 {" "}
                 <a
                   className="hover:underline hover:text-blue-500"
-                  href={item.applicant.profile.resume}
+                  href={item?.applicant?.profile?.resume}
                   target="_blank"
                 >
                   {" "}
-                  {item.applicant.profile.resumeOriginalName}
+                  {item?.applicant?.profile?.resumeOriginalName}
                 </a>
               </TableCell>
-              <TableCell>{item.createdAt.split("T")[0]}</TableCell>
+              <TableCell>{item?.createdAt?.split("T")[0]}</TableCell>
               <TableCell>
                 <Popover>
                   <PopoverTrigger>
@@ -73,7 +73,7 @@ const applicantsTable = () => {
                   </PopoverTrigger>
                   <PopoverContent className="w-32 bg-white cursor-pointer">
                     {" "}
-                    {shortlistedStatus.map((status, map) => {
+                    {shortlistedStatus?.map((status, map) => {
                       return (
                         <div
                           onClick={() => statusHandler(status, item._id)}

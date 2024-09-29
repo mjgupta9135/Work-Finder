@@ -35,7 +35,7 @@ const UpdateProfileDialogue = ({ open, setOpen }) => {
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files?.[0];
+    const file = e?.target?.files?.[0];
     setInput({ ...input, file });
   };
 
@@ -45,21 +45,21 @@ const UpdateProfileDialogue = ({ open, setOpen }) => {
 
     const formData = new FormData();
     formData.append("fullname", input.fullname);
-    formData.append("email", input.email);
-    formData.append("phone", input.phone);
+    formData.append("email", input?.email);
+    formData.append("phone", input?.phone);
 
     // Append individual profile fields directly (no JSON stringify)
-    formData.append("bio", input.bio);
-    if (input.skills && Array.isArray(input.skills)) {
+    formData.append("bio", input?.bio);
+    if (input.skills && Array.isArray(input?.skills)) {
       input.skills.forEach((skill, index) =>
         formData.append(`skills[${index}]`, skill)
       );
     } else {
-      formData.append("skills", input.skills); // If not array or already a string
+      formData.append("skills", input?.skills); // If not array or already a string
     }
     // Append the file if it exists
     if (input.file) {
-      formData.append("file", input.file);
+      formData.append("file", input?.file);
     }
 
     try {
@@ -73,8 +73,8 @@ const UpdateProfileDialogue = ({ open, setOpen }) => {
       );
 
       if (response.data.success) {
-        dispatch(setUser(response.data.user));
-        toast.success(response.data.message);
+        dispatch(setUser(response?.data?.user));
+        toast.success(response?.data?.message);
         setOpen(false);
       }
     } catch (error) {
@@ -117,7 +117,7 @@ const UpdateProfileDialogue = ({ open, setOpen }) => {
                 <Input
                   id="fullname"
                   name="fullname"
-                  value={input.fullname}
+                  value={input?.fullname}
                   onChange={handleChange}
                   className="col-span-3"
                   required
@@ -132,7 +132,7 @@ const UpdateProfileDialogue = ({ open, setOpen }) => {
                   id="email"
                   name="email"
                   type="email"
-                  value={input.email}
+                  value={input?.email}
                   onChange={handleChange}
                   className="col-span-3"
                   required
@@ -146,7 +146,7 @@ const UpdateProfileDialogue = ({ open, setOpen }) => {
                 <Input
                   id="phone"
                   name="phone"
-                  value={input.phone}
+                  value={input?.phone}
                   onChange={handleChange}
                   className="col-span-3"
                   required
@@ -160,7 +160,7 @@ const UpdateProfileDialogue = ({ open, setOpen }) => {
                 <Input
                   id="bio"
                   name="bio"
-                  value={input.bio}
+                  value={input?.bio}
                   onChange={handleChange}
                   className="col-span-3"
                 />
@@ -173,7 +173,7 @@ const UpdateProfileDialogue = ({ open, setOpen }) => {
                 <Input
                   id="skills"
                   name="skills"
-                  value={input.skills}
+                  value={input?.skills}
                   onChange={handleChange}
                   className="col-span-3"
                 />

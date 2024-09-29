@@ -23,12 +23,12 @@ const CompaniesTable = () => {
 
   useEffect(() => {
     const filteredCompany =
-      allCompany.length > 0 &&
-      allCompany.filter((company) => {
+      allCompany?.length > 0 &&
+      allCompany?.filter((company) => {
         if (searchCompany) {
-          return company.name
+          return company?.name
             .toLowerCase()
-            .includes(searchCompany.toLowerCase());
+            .includes(searchCompany?.toLowerCase());
         }
         return true;
       });
@@ -52,28 +52,28 @@ const CompaniesTable = () => {
         </TableHeader>
 
         <TableBody>
-          {allCompany.length === 0 ? (
+          {allCompany?.length === 0 ? (
             <TableRow>
               <TableCell colSpan={4} className="text-center">
                 You haven't registered any company yet
               </TableCell>
             </TableRow>
           ) : (
-            filterCompany.map((company) => (
-              <TableRow key={company._id}>
+            filterCompany?.map((company) => (
+              <TableRow key={company?._id}>
                 {" "}
                 <TableCell className="text-center">
                   <Avatar>
                     <AvatarImage
-                      src={company.logo}
-                      alt={`${company.name} Logo`}
+                      src={company?.logo}
+                      alt={`${company?.name} Logo`}
                     />{" "}
                     {/* Update the logo URL */}
                   </Avatar>
                 </TableCell>
-                <TableCell className="text-center">{company.name}</TableCell>{" "}
+                <TableCell className="text-center">{company?.name}</TableCell>{" "}
                 <TableCell className="text-center">
-                  {new Date(company.createdAt).toLocaleDateString() || "N/A"}
+                  {new Date(company?.createdAt).toLocaleDateString() || "N/A"}
                 </TableCell>{" "}
                 <TableCell className="text-center">
                   <Popover>
@@ -83,7 +83,7 @@ const CompaniesTable = () => {
                     <PopoverContent className="w-28">
                       <div
                         onClick={() =>
-                          navigate(`/admin/companies/${company._id}`)
+                          navigate(`/admin/companies/${company?._id}`)
                         }
                         className="flex items-center gap-4 w-fit cursor-pointer"
                       >

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -11,43 +11,49 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setSearchQuery } from "@/slices/jobSlice";
 
-const category = [
+const categories = [
   "Frontend Developer",
   "Backend Developer",
   "Data Science",
   "Graphic Designer",
   "Full Stack Developer",
-  "Devops Engineer",
+  "DevOps Engineer",
 ];
 
 const CategoryCarousel = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const searchJobHandler = (query) => {
-    dispatch(setSearchQuery(query));
-    navigate("/browse");
-  };
+
+  // Memoize the handler to avoid unnecessary re-renders
+  const searchJobHandler = useCallback(
+    (query) => {
+      dispatch(setSearchQuery(query));
+      navigate("/browse");
+    },
+    [dispatch, navigate]
+  );
+
   return (
     <div className="animate-fadeInLeft">
       <Carousel className="w-full max-w-xl mx-auto my-28">
         <CarouselContent>
-          {category.map((cat, index) => (
+          {categories?.map((category, index) => (
             <CarouselItem
               key={index}
-              className="md:basis-1/2 flex lg:basis-1/3   "
+              className="md:basis-1/2 flex lg:basis-1/3 p-2"
             >
               <Button
-                onClick={() => searchJobHandler(cat)}
+                onClick={() => searchJobHandler(category)}
                 variant="outline"
                 className="rounded-full font-semibold"
               >
-                {cat}
+                {category}
               </Button>
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselNext />
-        <CarouselPrevious />
+        <CarouselNext aria-label="Next" />
+        <CarouselPrevious aria-label="Previous" />
       </Carousel>
     </div>
   );

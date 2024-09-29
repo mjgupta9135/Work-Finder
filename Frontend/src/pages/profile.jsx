@@ -19,8 +19,8 @@ const profile = () => {
 
   // Check if skills has elements and if the first element is a string
   const skillsArray =
-    Array.isArray(skills) && typeof skills[0] === "string"
-      ? skills[0].split(",").map((skill) => skill.trim()) // Split and trim whitespace
+    Array?.isArray(skills) && typeof skills[0] === "string"
+      ? skills[0]?.split(",")?.map((skill) => skill?.trim()) // Split and trim whitespace
       : [];
 
   return (
@@ -59,13 +59,13 @@ const profile = () => {
         <div>
           <h1>Skills</h1>
           <div className="flex items-center gap-2 my-4">
-            {skillsArray.length > 0 ? (
-              skillsArray.map((skill, index) => (
+            {skillsArray?.length > 0 ? (
+              skillsArray?.map((skill, index) => (
                 <Badge
                   className="bg-black text-white px-2 py-1 rounded-md"
                   key={index}
                 >
-                  {skill.trim()} {/* Trim any extra spaces */}
+                  {skill?.trim()} {/* Trim any extra spaces */}
                 </Badge>
               ))
             ) : (

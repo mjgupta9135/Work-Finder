@@ -57,9 +57,9 @@ const postJob = () => {
         },
         withCredentials: true,
       });
-      if (res?.data.success) {
+      if (res?.data?.success) {
         navigate("/admin/jobs");
-        toast.success(res.data.message);
+        toast.success(res?.data?.message);
       }
     } catch (error) {
       console.log(error);
@@ -105,7 +105,7 @@ const postJob = () => {
               <Input
                 type="text"
                 name="title"
-                value={input.title}
+                value={input?.title}
                 onChange={changeEventHandler}
                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-2"
               />
@@ -115,7 +115,7 @@ const postJob = () => {
               <Input
                 type="text"
                 name="description"
-                value={input.description}
+                value={input?.description}
                 onChange={changeEventHandler}
                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-2"
               />
@@ -125,7 +125,7 @@ const postJob = () => {
               <Input
                 type="text"
                 name="requirements"
-                value={input.requirements}
+                value={input?.requirements}
                 onChange={changeEventHandler}
                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-2"
               />
@@ -135,7 +135,7 @@ const postJob = () => {
               <Input
                 type="number"
                 name="salary"
-                value={input.salary}
+                value={input?.salary}
                 onChange={changeEventHandler}
                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-2"
               />
@@ -145,7 +145,7 @@ const postJob = () => {
               <Input
                 type="number"
                 name="position"
-                value={input.position}
+                value={input?.position}
                 onChange={changeEventHandler}
                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-2"
               />
@@ -155,7 +155,7 @@ const postJob = () => {
               <Input
                 type="number"
                 name="experience"
-                value={input.experience}
+                value={input?.experience}
                 onChange={changeEventHandler}
                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-2"
               />
@@ -165,7 +165,7 @@ const postJob = () => {
               <Input
                 type="text"
                 name="jobType"
-                value={input.jobType}
+                value={input?.jobType}
                 onChange={changeEventHandler}
                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-2"
               />
@@ -175,26 +175,26 @@ const postJob = () => {
               <Input
                 type="text"
                 name="location"
-                value={input.location}
+                value={input?.location}
                 onChange={changeEventHandler}
                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-2"
               />
             </div>
 
-            {allCompany.length >= 0 && (
+            {allCompany?.length >= 0 && (
               <Select onValueChange={selectChangeHander}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Select a Company" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup className="bg-white">
-                    {allCompany.map((company) => {
+                    {allCompany?.map((company) => {
                       return (
                         <SelectItem
                           className="cursor-pointer"
                           value={company?._id}
                         >
-                          {company.name}
+                          {company?.name}
                         </SelectItem>
                       );
                     })}

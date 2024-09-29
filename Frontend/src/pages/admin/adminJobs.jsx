@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setSearchCompany } from "@/slices/companySlice";
 import AdminJobsTable from "@/components/admin/adminJobsTable";
 import useGetAdminJobs from "@/hooks/useGetAdminJobs";
 import { setSearchJob } from "@/slices/jobSlice";

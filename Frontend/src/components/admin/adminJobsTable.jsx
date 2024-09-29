@@ -21,12 +21,14 @@ const adminJobsTable = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const filteredJobs =
-      allAdminJobs.length > 0 &&
-      allAdminJobs.filter((job) => {
+      allAdminJobs?.length > 0 &&
+      allAdminJobs?.filter((job) => {
         if (searchJob) {
           return (
-            job.company.name.toLowerCase().includes(searchJob.toLowerCase()) ||
-            job?.title?.toLowerCase().includes(searchJob.toLowerCase())
+            job?.company?.name
+              ?.toLowerCase()
+              ?.includes(searchJob?.toLowerCase()) ||
+            job?.title?.toLowerCase().includes(searchJob?.toLowerCase())
           );
         }
         return true;
@@ -49,22 +51,22 @@ const adminJobsTable = () => {
         </TableHeader>
 
         <TableBody>
-          {filterJobs.length === 0 ? (
+          {filterJobs?.length === 0 ? (
             <TableRow>
               <TableCell colSpan={4} className="text-center">
                 You haven't posted any job yet
               </TableCell>
             </TableRow>
           ) : (
-            filterJobs.map((job) => (
+            filterJobs?.map((job) => (
               <TableRow key={job._id}>
                 {" "}
                 <TableCell className="text-center">
-                  {job.company.name}
+                  {job?.company?.name}
                 </TableCell>
-                <TableCell className="text-center">{job.title}</TableCell>
+                <TableCell className="text-center">{job?.title}</TableCell>
                 <TableCell className="text-center">
-                  {new Date(job.createdAt).toLocaleDateString() || "N/A"}
+                  {new Date(job?.createdAt).toLocaleDateString() || "N/A"}
                 </TableCell>{" "}
                 <TableCell className="text-center">
                   <Popover>
@@ -81,7 +83,7 @@ const adminJobsTable = () => {
                       </div>
                       <div
                         onClick={() =>
-                          navigate(`/admin/jobs/${job._id}/applicants`)
+                          navigate(`/admin/jobs/${job?._id}/applicants`)
                         }
                         className="flex items-center w-fit gap-4 mt-4 cursor-pointer"
                       >

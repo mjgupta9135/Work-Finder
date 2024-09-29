@@ -33,14 +33,14 @@ const jobDetails = () => {
         }
       );
 
-      if (res.data.success) {
+      if (res?.data?.success) {
         setIsApplied(true);
         const updateSingleJob = {
           ...singleJob,
           application: [...singleJob.application, { applicant: user?._id }],
         };
         dispatch(setSingleJob(updateSingleJob));
-        toast.success(res.data.message);
+        toast.success(res?.data?.message);
       }
     } catch (error) {
       console.log(error);
@@ -75,10 +75,10 @@ const jobDetails = () => {
           withCredentials: true,
         });
         if (res.data.success) {
-          dispatch(setSingleJob(res.data.job));
+          dispatch(setSingleJob(res?.data?.job));
           setIsApplied(
-            res.data.job.application.some(
-              (application) => application.applicant === user?._id
+            res?.data?.job?.application?.some(
+              (application) => application?.applicant === user?._id
             )
           );
         }

@@ -39,21 +39,21 @@ const companySetup = () => {
 
   useEffect(() => {
     setInput({
-      name: singleCompany.name || "",
-      description: singleCompany.description || "",
-      website: singleCompany.website || "",
-      location: singleCompany.location || "",
-      logo: singleCompany.logo || "",
+      name: singleCompany?.name || "",
+      description: singleCompany?.description || "",
+      website: singleCompany?.website || "",
+      location: singleCompany?.location || "",
+      logo: singleCompany?.logo || "",
     });
   }, [singleCompany]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("name", input.name);
-    formData.append("description", input.description);
-    formData.append("location", input.location);
-    formData.append("website", input.website);
+    formData.append("name", input?.name);
+    formData.append("description", input?.description);
+    formData.append("location", input?.location);
+    formData.append("website", input?.website);
 
     if (input.file) {
       formData.append("file", input.file);
@@ -72,9 +72,8 @@ const companySetup = () => {
         }
       );
 
-      if (res.data.success) {
-        console.log(res.data);
-        toast.success(res.data.message);
+      if (res?.data?.success) {
+        toast.success(res?.data.message);
         navigate("/admin/companies"); // Only navigate on success
       }
     } catch (error) {
@@ -127,7 +126,7 @@ const companySetup = () => {
               <Input
                 type="text"
                 name="name"
-                value={input.name}
+                value={input?.name}
                 onChange={changeEventHandler}
               />
             </div>
@@ -136,7 +135,7 @@ const companySetup = () => {
               <Input
                 type="text"
                 name="description"
-                value={input.description}
+                value={input?.description}
                 onChange={changeEventHandler}
               />
             </div>
@@ -145,7 +144,7 @@ const companySetup = () => {
               <Input
                 type="text"
                 name="location"
-                value={input.location}
+                value={input?.location}
                 onChange={changeEventHandler}
               />
             </div>
@@ -154,7 +153,7 @@ const companySetup = () => {
               <Input
                 type="text"
                 name="website"
-                value={input.website}
+                value={input?.website}
                 onChange={changeEventHandler}
               />
             </div>{" "}
