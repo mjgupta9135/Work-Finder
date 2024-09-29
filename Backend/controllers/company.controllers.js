@@ -82,34 +82,53 @@ export const getCompanyById = async (req, res) => {
 
 export const updateCompany = async (req, res) => {
   try {
+    // Validate request body using Zod
     const response = updateCompanyValidation.safeParse(req.body);
     if (!response.success) {
-      // Handle Zod validation errors
+      // Handle validation errors
       return res.status(400).json({
         errors: response.error.errors,
         success: false,
       });
     }
-    const { name, description, website, location } = response.data;
-    const file = req.file;
-    const fileUri = getDataUri(file);
-    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
-    const logo = cloudResponse.secure_url;
 
-    const updateData = { name, description, website, location, logo };
+    const { name, description, website, location } = response.data;
+
+    // Check if the file is present
+    let logo = null;
+    if (req.file) {
+      const fileUri = getDataUri(req.file);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+      logo = cloudResponse.secure_url;
+    }
+
+    const updateData = { name, description, website, location };
+    if (logo) {
+      updateData.logo = logo; // Only add logo if it was uploaded
+    }
+
+    // Update company in the database
     const company = await Company.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
     });
+
     if (!company) {
       return res.status(404).json({
-        message: "Company Not found",
+        message: "Company not found",
+        success: false,
       });
     }
+
     return res.status(200).json({
-      message: "Company Information updated",
+      message: "Company information updated successfully",
       success: true,
+      company,
     });
   } catch (error) {
-    console.log(error);
+    console.error("Error updating company:", error);
+    return res.status(500).json({
+      message: "An error occurred while updating the company",
+      success: false,
+    });
   }
 };

@@ -137,10 +137,15 @@ export const updateProfile = async (req, res) => {
         success: false,
       });
     }
-    // setup cloudinary details
+
+    // Check if the file exists
     const file = req.file;
-    const fileUri = getDataUri(file);
-    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+    let cloudResponse;
+
+    if (file) {
+      const fileUri = getDataUri(file);
+      cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+    }
 
     const { fullname, email, phone } = response.data;
     const data = req.body;
@@ -164,13 +169,12 @@ export const updateProfile = async (req, res) => {
     user.profile.skills = data.skills ?? [];
 
     if (data.company && mongoose.Types.ObjectId.isValid(data.company)) {
-      // Assign the valid company ObjectId to the user profile
       user.profile.company = data.company;
     } else if (data.company === undefined || data.company === null) {
-      // Set company to null if no company is provided
       user.profile.company = null;
     }
 
+    // Update resume if file was uploaded
     if (cloudResponse) {
       user.profile.resume = cloudResponse.secure_url;
       user.profile.resumeOriginalName = file.originalname;
