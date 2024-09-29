@@ -17,29 +17,38 @@ const shortlistedStatus = ["Accepted", "Rejected"];
 const applicantsTable = () => {
   const { applicants } = useSelector((store) => store.application);
   const applicationArray = applicants.application;
-  console.log(applicationArray[0]);
   return (
     <div>
       <Table>
         <TableCaption>A list of your applied user</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>Full Name</TableHead>
-            <TableHead>Email Id</TableHead>
-            <TableHead>Phone</TableHead>
-            <TableHead>Resume</TableHead>
-            <TableHead>Date</TableHead>
-            <TableHead>Action</TableHead>
+            <TableHead className="font-bold">Full Name</TableHead>
+            <TableHead className="font-bold">Email Id</TableHead>
+            <TableHead className="font-bold">Phone</TableHead>
+            <TableHead className="font-bold">Resume</TableHead>
+            <TableHead className="font-bold">Date</TableHead>
+            <TableHead className="font-bold">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {applicationArray.map((item) => (
-            <TableRow>
+            <TableRow key="item._id">
               <TableCell>{item.applicant.fullname}</TableCell>
               <TableCell>{item.applicant.email}</TableCell>
               <TableCell>{item.applicant.phone}</TableCell>
-              <TableCell>Mrityunjay.pdf</TableCell>
-              <TableCell>21/01/2001</TableCell>
+              <TableCell>
+                {" "}
+                <a
+                  className="hover:underline hover:text-blue-500"
+                  href={item.applicant.profile.resume}
+                  target="_blank"
+                >
+                  {" "}
+                  {item.applicant.profile.resumeOriginalName}
+                </a>
+              </TableCell>
+              <TableCell>{item.createdAt.split("T")[0]}</TableCell>
               <TableCell>
                 <Popover>
                   <PopoverTrigger>
