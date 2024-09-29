@@ -8,10 +8,16 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { MoreHorizontal } from "lucide-react";
+import { useSelector } from "react-redux";
 
 const shortlistedStatus = ["Accepted", "Rejected"];
 
 const applicantsTable = () => {
+  const { applicants } = useSelector((store) => store.application);
+  const applicationArray = applicants.application;
+  console.log(applicationArray[0]);
   return (
     <div>
       <Table>
@@ -25,22 +31,38 @@ const applicantsTable = () => {
             <TableHead>Date</TableHead>
             <TableHead>Action</TableHead>
           </TableRow>
-
-          <TableBody>
+        </TableHeader>
+        <TableBody>
+          {applicationArray.map((item) => (
             <TableRow>
-              <TableCell>Mrityunjay Gupta</TableCell>
-              <TableCell>mjguptacse@gmail.com</TableCell>
-              <TableCell>9135407413</TableCell>
+              <TableCell>{item.applicant.fullname}</TableCell>
+              <TableCell>{item.applicant.email}</TableCell>
+              <TableCell>{item.applicant.phone}</TableCell>
               <TableCell>Mrityunjay.pdf</TableCell>
               <TableCell>21/01/2001</TableCell>
               <TableCell>
-                {shortlistedStatus.map((status, map) => {
-                  return <div key="index"></div>;
-                })}
+                <Popover>
+                  <PopoverTrigger>
+                    <MoreHorizontal />
+                  </PopoverTrigger>
+                  <PopoverContent className="w-32 bg-white cursor-pointer">
+                    {" "}
+                    {shortlistedStatus.map((status, map) => {
+                      return (
+                        <div
+                          key="index"
+                          className="flex w-fit items-center my-2 cursor-pointer "
+                        >
+                          <span>{status}</span>
+                        </div>
+                      );
+                    })}
+                  </PopoverContent>
+                </Popover>
               </TableCell>
             </TableRow>
-          </TableBody>
-        </TableHeader>
+          ))}
+        </TableBody>
       </Table>
     </div>
   );
