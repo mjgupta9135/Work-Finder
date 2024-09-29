@@ -8,8 +8,10 @@ import ApplicationTable from "@/components/applicationTable";
 import { Label } from "@/components/ui/label";
 import UpdateProfileDialogue from "@/components/updateProfileDialogue";
 import { useSelector } from "react-redux";
+import useGetAllAppliedJobs from "@/hooks/useGetAllAppliedJobs";
 
 const profile = () => {
+  useGetAllAppliedJobs();
   const isResume = true;
   const [open, setOpen] = useState(false);
   const { user } = useSelector((store) => store.auth);

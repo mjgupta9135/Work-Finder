@@ -9,32 +9,49 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "./ui/badge";
-const array = [1, 2, 3, 4, 5];
+import { useSelector } from "react-redux";
+
 const applicationTable = () => {
+  const { allAppliedJobs } = useSelector((store) => store.jobs);
+
   return (
-    <div className=" mt-6 border-2 bg-gray-400 rounded-xl mb-20">
-      <Table>
-        <TableHeader className="font-bold">
-          <TableRow className="text-lg ">
-            <TableHead className="font-bold text-center">Date</TableHead>
-            <TableHead className="font-bold text-center">Job Role</TableHead>
-            <TableHead className="font-bold text-center">Company</TableHead>
-            <TableHead className="text-center font-bold ">Status</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {array.map((item, index) => (
-            <TableRow key={index} className="bg-white">
-              <TableCell className="text-center">13/07/24</TableCell>
-              <TableCell className="text-center">Front End Developer</TableCell>
-              <TableCell className="text-center">Google</TableCell>
-              <TableCell className="text-center ">
-                <Badge className="text-xs bg-black text-white">Pending</Badge>
-              </TableCell>
+    <div className="mt-6 border-2 bg-gray-400 rounded-xl mb-20">
+      {allAppliedJobs?.length > 0 ? (
+        <Table>
+          <TableHeader className="font-bold">
+            <TableRow className="text-lg">
+              <TableHead className="font-bold text-center">Date</TableHead>
+              <TableHead className="font-bold text-center">Job Role</TableHead>
+              <TableHead className="font-bold text-center">Company</TableHead>
+              <TableHead className="text-center font-bold">Status</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {allAppliedJobs.map((item, index) => (
+              <TableRow key={index} className="bg-white">
+                <TableCell className="text-center">
+                  {item?.createdAt?.split("T")[0]}
+                </TableCell>
+                <TableCell className="text-center">
+                  {item?.job?.title}
+                </TableCell>
+                <TableCell className="text-center">
+                  {item?.job?.company?.name}
+                </TableCell>
+                <TableCell className="text-center">
+                  <Badge className="text-xs bg-black text-white">
+                    {item?.status}
+                  </Badge>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <span className="text-center block p-6 text-lg">
+          You haven't applied for any jobs yet.
+        </span>
+      )}
     </div>
   );
 };
