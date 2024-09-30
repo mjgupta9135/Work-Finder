@@ -16,11 +16,24 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-const corsOption = {
-  origin: "https://work-finder-ten.vercel.app",
-  credentials: true,
+const allowedOrigins = [
+  "https://work-finder-ten.vercel.app", // Production URL
+  "http://localhost:5173", // Local development URL
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      // If origin is allowed or no origin (for non-browser requests), allow the request
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true, // Allow cookies to be sent
 };
-app.use(cors(corsOption));
+
+app.use(cors(corsOptions));
 
 //apis
 app.use("/api/v1/user", userRoute);
