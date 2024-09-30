@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 
 const job = ({ job }) => {
   const navigate = useNavigate();
-  console.log(job);
   const daysAgoFunction = (mongodbTime) => {
     const createdAt = new Date(mongodbTime);
     const currentTime = new Date();

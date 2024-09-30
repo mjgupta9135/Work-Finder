@@ -24,7 +24,6 @@ const companySetup = () => {
   const companyId = params.id;
   useGetCompanyById(companyId);
   const { singleCompany } = useSelector((store) => store.company);
-  console.log(singleCompany);
   const [loading, setLoading] = useState(false);
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -34,8 +33,6 @@ const companySetup = () => {
     const file = e.target.files?.[0];
     setInput({ ...input, file });
   };
-
-  console.log({ singleCompany });
 
   useEffect(() => {
     setInput({

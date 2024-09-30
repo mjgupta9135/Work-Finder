@@ -50,7 +50,7 @@ export const register = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    res.status(500).json([console.log(error)]);
+    res.status(500).json([phone(error)]);
   }
 };
 
