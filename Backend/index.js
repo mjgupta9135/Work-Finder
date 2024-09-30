@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 const corsOption = {
-  origin: "https://job-hunt-nve6.onrender.com",
+  origin: "https://work-finder-m7mo.onrender.com",
   credentials: true,
 };
 app.use(cors(corsOption));
