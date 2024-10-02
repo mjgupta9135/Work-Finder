@@ -14,21 +14,21 @@ module.exports = {
       },
       keyframes: {
         fadeInUp: {
-          from: { opacity: 0, transform: "translateY(20px)" },
+          from: { opacity: 0, transform: "translateY(10px)" },
           to: { opacity: 1, transform: "translateY(0)" },
         },
         fadeInLeft: {
-          from: { opacity: 0, transform: "translateX(-20px)" },
+          from: { opacity: 0, transform: "translateX(-10px)" },
           to: { opacity: 1, transform: "translateX(0)" },
         },
         fadeInRight: {
-          from: { opacity: 0, transform: "translateX(20px)" },
+          from: { opacity: 0, transform: "translateX(10px)" },
           to: { opacity: 1, transform: "translateX(0)" },
         },
       },
       animation: {
-        fadeInUp: "fadeInUp 1.5s ease-out",
-        fadeInLeft: "fadeInLeft 1.5s ease-out",
+        fadeInUp: "fadeInUp 0.3s ease-out",
+        fadeInLeft: "fadeInLeft 0.5s ease-out",
         fadeInRight: "fadeInRight 0.5s ease-out",
       },
     },
