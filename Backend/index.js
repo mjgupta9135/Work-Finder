@@ -17,7 +17,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 const corsOption = {
-  origin: "http://localhost:5173",
+  origin: "https://work-finder-m7mo.onrender.com",
+  origin: "http://localhost:3000",
   credentials: true,
 };
 app.use(cors(corsOption));
@@ -28,10 +29,10 @@ app.use("/api/v1/company", companyRouter);
 app.use("/api/v1/job", jobRouter);
 app.use("/api/v1/application", applicationRouter);
 
-// app.use(express.static(path.join(_dirname, "/Frontend/dist")));
-// app.get("*", (req, res) => {
-//   res.sendFile(path.resolve(_dirname, "Frontend", "dist", "index.html"));
-// });
+app.use(express.static(path.join(_dirname, "/Frontend/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(_dirname, "Frontend", "dist", "index.html"));
+});
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
