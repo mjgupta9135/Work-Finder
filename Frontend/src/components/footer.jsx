@@ -2,9 +2,8 @@ import React from "react";
 
 const footer = () => {
   return (
-    <footer className="bg-gray-800 text-white py-8 mt-16">
+    <footer className="bg-gray-800 text-white py-8   ">
       <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-        {/* Left Section */}
         <div className="mb-4 md:mb-0">
           <h2 className="text-lg font-bold text-purple-400">WorkFinder</h2>
           <p className="text-sm">Find your dream job with us</p>

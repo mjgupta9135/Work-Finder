@@ -34,9 +34,9 @@ const Login = () => {
       });
       if (response.data.success) {
         dispatch(setUser(response.data.user));
-
+        console.log(response?.data?.user?.role);
         if (response?.data?.user?.role === "recruiter") {
-          navigate("/admin/companies");
+          navigate("/admin/jobs");
         } else {
           navigate("/profile");
         }
@@ -83,7 +83,6 @@ const Login = () => {
 
   return (
     <div>
-      <Navbar />
       <div className="flex items-center justify-center max-w-7xl mx-auto animate-fadeInUp">
         <form
           onSubmit={submitHandler}
