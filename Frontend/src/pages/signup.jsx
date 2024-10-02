@@ -100,7 +100,6 @@ const Signup = () => {
 
   return (
     <div>
-      <Navbar />
       <div className="flex animate-fadeInUp items-center justify-center max-w-7xl mx-auto">
         <form
           onSubmit={submitHandler}

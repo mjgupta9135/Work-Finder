@@ -103,7 +103,6 @@ const companySetup = () => {
   };
   return (
     <>
-      <Navbar />
       <div className="max-w-xl mx-auto my-10 border-black border p-4">
         <form onSubmit={submitHandler}>
           <div className="flex items-center gap-5 p-8 ">

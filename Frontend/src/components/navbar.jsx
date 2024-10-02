@@ -18,7 +18,8 @@ const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const logoutHandler = async (e) => {
+
+  const logoutHandler = async () => {
     try {
       const res = await axios.get(`${USER_API_END_POINT}/logout`, {
         withCredentials: true,
@@ -30,7 +31,7 @@ const Navbar = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Logout failed.");
     }
   };
 
@@ -48,10 +49,9 @@ const Navbar = () => {
           {user && user?.role === "recruiter" ? (
             <>
               <li>
-                <Link to="/admin/companies">Companies</Link>{" "}
+                <Link to="/admin/companies">Companies</Link>
               </li>
               <li>
-                {" "}
                 <Link to="/admin/jobs">Jobs</Link>
               </li>
             </>
@@ -86,43 +86,41 @@ const Navbar = () => {
         ) : (
           <Popover>
             <PopoverTrigger asChild>
-              <Avatar>
-                <AvatarImage
-                  className="cursor-pointer"
-                  src={user?.profile?.profilePhoto}
-                  alt="@shadcn"
-                />{" "}
+              <Avatar className="cursor-pointer">
+                <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
               </Avatar>
             </PopoverTrigger>
-            <PopoverContent className="w-80 bg-white shadow-xl px-5 py-2 animate-fadeInRight mt-3 rounded-b-md mr-4">
+
+            <PopoverContent className="w-80 bg-gray-200 shadow-xl px-5 py-2 mt-3 ml-[-250px] z-10 rounded-b-md">
               <div className="my-4">
-                <div className="flex gap-4 space-y-2 items-center  ">
+                <div className="flex gap-4 space-y-2 items-center">
                   <Avatar>
                     <AvatarImage
                       className="cursor-pointer"
                       src={user?.profile?.profilePhoto}
                       alt="@shadcn"
-                    />{" "}
+                    />
                   </Avatar>
-                  <div className="">
+                  <div>
                     <h4 className="font-medium">{user?.fullname}</h4>
-                    <p className="text-sm text-muted-foreground">
-                      {user?.profile?.bio}
-                    </p>
                   </div>
                 </div>
-                <div className="flex flex-col my-2 text-gray-600">
+                <div className="flex flex-col my-2 text-gray-600 ">
                   {user && user.role === "student" && (
                     <div className="flex w-fit items-center gap-2 cursor-pointer">
                       <User2 />
-                      <Link to="/profile">
-                        <Button varient="Link"> View Profile</Button>
-                      </Link>
+                      <Button
+                        onClick={() => {
+                          window.location.href = "/profile"; // Redirect to the profile page with a full refresh
+                        }}
+                      >
+                        View Profile
+                      </Button>
                     </div>
                   )}
-                  <div className="flex w-fit items-center gap-2 cursor-pointer">
+                  <div className="flex w-fit items-center gap-2 cursor-pointer border-b-2 p-1">
                     <LogOut />
-                    <Button onClick={logoutHandler} varient="Link">
+                    <Button className="border-2" onClick={logoutHandler}>
                       Logout
                     </Button>
                   </div>

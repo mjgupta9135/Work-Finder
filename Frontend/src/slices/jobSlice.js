@@ -40,4 +40,5 @@ export const {
   setAllAppliedJobs,
   setSearchQuery,
 } = jobSlice.actions;
+
 export default jobSlice.reducer;

@@ -92,7 +92,6 @@ const postJob = () => {
 
   return (
     <>
-      <Navbar />
       <div className="flex items-center justify-center w-screen my-5 ">
         <form
           onSubmit={submitHandler}
