@@ -5,4 +5,4 @@ export const JOB_API_END_POINT =
 export const APPLICATION_API_END_POINT =
   "https://work-finder-m7mo.onrender.com/api/v1/application";
 export const COMPANY_API_END_POINT =
-  "https://work-finder-m7mo.onrender.com/v1/api/company";
+  "https://work-finder-m7mo.onrender.com/api/v1/company";
